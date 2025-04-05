@@ -14,7 +14,7 @@ import demoCode from "./demo.tsx?raw";
 import { useState } from "react";
 // import { remarkDocx } from "@m2d/remark-docx";
 import { toDocx } from "mdast2docx";
-import { emojiPlugin } from "@m2d/emoji";
+import { mermaidPlugin } from "@m2d/mermaid";
 import {
   tablePlugin,
   listPlugin,
@@ -55,7 +55,7 @@ export function Demo() {
           tablePlugin(),
           listPlugin(),
           mathPlugin(),
-          emojiPlugin(),
+          mermaidPlugin(),
           imagePlugin(),
         ],
       },
