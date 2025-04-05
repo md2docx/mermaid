@@ -39,7 +39,6 @@
     "docx": "^9.3.0",
     "esbuild-plugin-rdi": "^0.0.0",
     "jsdom": "^26.0.0",
-    "remark-gfm": "^4.0.1",
     "remark-parse": "^11.0.0",
     "tsup": "^8.4.0",
     "typescript": "^5.8.2",
@@ -48,7 +47,8 @@
     "vitest": "^3.1.1"
   },
   "dependencies": {
-    "@m2d/core": "^0.0.3"
+    "@m2d/core": "^0.0.3",
+    "mermaid": "^11.6.0"
   },
   "peerDependencies": {
     "docx": "^9.3.0"
