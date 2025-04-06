@@ -47,7 +47,7 @@ const svgToBase64 = (svg: string): Promise<string> => {
 const tightlyCropMermaidSvg = async (
   svgRaw: string,
   container: HTMLDivElement,
-): Promise<string> => {
+): Promise<{ svg: string; scale: number }> => {
   return new Promise((resolve, reject) => {
     container.innerHTML = svgRaw;
     const svgEl = container.querySelector("svg");
@@ -58,24 +58,27 @@ const tightlyCropMermaidSvg = async (
       try {
         const bbox = svgEl.getBBox();
 
-        // Clone the SVG
-        const clonedSvg = svgEl.cloneNode(true) as SVGSVGElement;
+        const origW = parseFloat(getComputedStyle(svgEl).width) || 0;
+        const origH = parseFloat(getComputedStyle(svgEl).height) || 0;
 
-        // Optional margin
         const margin = 4;
         const x = bbox.x - margin;
         const y = bbox.y - margin;
-        const width = bbox.width + margin * 2;
-        const height = bbox.height + margin * 2;
+        const croppedW = bbox.width + margin * 2;
+        const croppedH = bbox.height + margin * 2;
 
-        clonedSvg.setAttribute("viewBox", `${x} ${y} ${width} ${height}`);
-        clonedSvg.setAttribute("width", `${width}`);
-        clonedSvg.setAttribute("height", `${height}`);
+        const finalW = origW > 0 ? Math.min(croppedW, origW) : croppedW;
+        const finalH = origH > 0 ? Math.min(croppedH, origH) : croppedH;
+
+        const clonedSvg = svgEl.cloneNode(true) as SVGSVGElement;
+        clonedSvg.setAttribute("viewBox", `${x} ${y} ${croppedW} ${croppedH}`);
+        clonedSvg.setAttribute("width", `${finalW}`);
+        clonedSvg.setAttribute("height", `${finalH}`);
         clonedSvg.removeAttribute("style");
 
-        const result = new XMLSerializer().serializeToString(clonedSvg);
+        const svg = new XMLSerializer().serializeToString(clonedSvg);
         svgEl.remove();
-        resolve(result);
+        resolve({ svg, scale: Math.min(croppedW / origW, croppedH / origH, 1) });
       } catch (err) {
         svgEl.remove();
         reject(err);
@@ -91,7 +94,8 @@ const svgToImageProps = async (
 ): Promise<IImageOptions> => {
   const img = new Image();
   container.appendChild(img);
-  const svgDataURL = await svgToBase64(svg);
+  const croppedSvg = await tightlyCropMermaidSvg(svg, container);
+  const svgDataURL = await svgToBase64(croppedSvg.svg);
   img.src = svgDataURL;
   await new Promise(resolve => (img.onload = resolve));
 
@@ -113,8 +117,9 @@ const svgToImageProps = async (
   img.remove();
 
   const scale = Math.min(
-    (options.maxW * options.dpi) / width,
-    (options.maxH * options.dpi) / height,
+    ((options.maxW * options.dpi) / width) * croppedSvg.scale,
+    ((options.maxH * options.dpi) / height) * croppedSvg.scale,
+    1,
   );
   return {
     type: options.imgType,
