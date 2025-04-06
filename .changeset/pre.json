@@ -1,0 +1,16 @@
+{
+  "mode": "exit",
+  "tag": "alpha",
+  "initialVersions": {
+    "@example/nextjs": "0.0.0",
+    "@example/vite": "0.0.0",
+    "@m2d/mermaid": "0.0.0",
+    "@repo/typescript-config": "0.0.0",
+    "@repo/eslint-config": "0.0.0",
+    "@repo/shared": "0.0.0",
+    "@repo/scripts": "0.0.0"
+  },
+  "changesets": [
+    "silly-ants-slide"
+  ]
+}
