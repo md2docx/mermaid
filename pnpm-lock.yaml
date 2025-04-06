@@ -65,7 +65,7 @@ importers:
         version: 19.1.0(react@19.1.0)
       react18-loaders:
         specifier: ^1.1.4
-        version: 1.1.4(@types/react@19.1.0)(next@15.2.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react@19.1.0)
+        version: 1.1.4(@types/react@19.1.0)(next@15.2.4(@babel/core@7.26.10)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react@19.1.0)
       remark-frontmatter:
         specifier: ^5.0.0
         version: 5.0.0
@@ -135,10 +135,10 @@ importers:
         version: 0.0.5(@types/react@19.1.0)(react@19.1.0)
       react18-loaders:
         specifier: ^1.1.4
-        version: 1.1.4(@types/react@19.1.0)(next@15.2.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react@19.1.0)
+        version: 1.1.4(@types/react@19.1.0)(next@15.2.4(@babel/core@7.26.10)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react@19.1.0)
       react18-themes:
         specifier: ^3.2.0
-        version: 3.2.0(@types/react@19.1.0)(next@15.2.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react@19.1.0)
+        version: 3.2.0(@types/react@19.1.0)(next@15.2.4(@babel/core@7.26.10)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react@19.1.0)
     devDependencies:
       '@repo/eslint-config':
         specifier: workspace:*
@@ -192,9 +192,6 @@ importers:
       jsdom:
         specifier: ^26.0.0
         version: 26.0.0
-      remark-gfm:
-        specifier: ^4.0.1
-        version: 4.0.1
       remark-parse:
         specifier: ^11.0.0
         version: 11.0.0
@@ -263,18 +260,24 @@ importers:
       '@m2d/emoji':
         specifier: latest
         version: 0.1.0(docx@9.3.0)
+      '@m2d/image':
+        specifier: ^0.0.4
+        version: 0.0.4(docx@9.3.0)
       '@m2d/mermaid':
         specifier: workspace:*
         version: link:../../lib
       '@mayank1513/fork-me':
         specifier: ^2.1.3
-        version: 2.1.3(@types/react@19.1.0)(next@15.2.4(@babel/core@7.26.10)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react@19.1.0)
+        version: 2.1.3(@types/react@19.1.0)(next@15.2.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react@19.1.0)
       '@repo/scripts':
         specifier: workspace:*
         version: link:../../scripts
       esbuild-raw-plugin:
         specifier: ^0.2.0
         version: 0.2.0
+      kosha:
+        specifier: ^1.0.0
+        version: 1.0.0(@types/react@19.1.0)(next@15.2.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react@19.1.0)
       mdast2docx:
         specifier: 0.3.6
         version: 0.3.6(remark-math@6.0.0)
@@ -292,16 +295,7 @@ importers:
         version: 4.1.8(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react18-loaders:
         specifier: ^1.1.4
-        version: 1.1.4(@types/react@19.1.0)(next@15.2.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react@19.1.0)
-      remark-frontmatter:
-        specifier: ^5.0.0
-        version: 5.0.0
-      remark-gfm:
-        specifier: ^4.0.1
-        version: 4.0.1
-      remark-math:
-        specifier: ^6.0.0
-        version: 6.0.0
+        version: 1.1.4(@types/react@19.1.0)(next@15.2.4(@babel/core@7.26.10)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react@19.1.0)
       remark-parse:
         specifier: ^11.0.0
         version: 11.0.0
@@ -941,6 +935,11 @@ packages:
 
   '@m2d/image@0.0.3':
     resolution: {integrity: sha512-sU5o7Os4g1x8h4FF85JSrxBGip+Of8ENdZLzQL1koGDjhs41NJ6yYMmDM9q2LutjOdF5VtowEjN4m65xZhvY7Q==}
+    peerDependencies:
+      docx: ^9.3.0
+
+  '@m2d/image@0.0.4':
+    resolution: {integrity: sha512-94yHqhZzjRFb9is9jLTDwG6TBU9Ij3emJJ9zSrlfTncPuTsxvXsrCybG3SgkFmwgGEBdydTYI3r9zU8KrMId9w==}
     peerDependencies:
       docx: ^9.3.0
 
@@ -2708,6 +2707,16 @@ packages:
 
   kolorist@1.8.0:
     resolution: {integrity: sha512-Y+60/zizpJ3HRH8DCss+q95yr6145JXZo46OTpFvDZWLfRCE4qChOyk1b26nMaNpfHHgxagk9dXT5OP0Tfe+dQ==}
+
+  kosha@1.0.0:
+    resolution: {integrity: sha512-d2OLDSlTZzdyBDJTYatJpKnN4Tc79kOf0LDKmwPrYTZqQd7KzHwhPT4L4vjV9bD1TMCDyVjARM/5SlmJR56X7A==}
+    peerDependencies:
+      '@types/react': '>=18'
+      next: '>=12.2'
+      react: '>=18'
+    peerDependenciesMeta:
+      next:
+        optional: true
 
   langium@3.3.1:
     resolution: {integrity: sha512-QJv/h939gDpvT+9SiLVlY7tZC3xB2qK57v0J04Sh9wpMb6MP1q8gB21L3WIo8T5P1MSMg3Ep14L7KkDCFG3y4w==}
@@ -4731,6 +4740,11 @@ snapshots:
       '@m2d/core': 0.0.3(docx@9.3.0)
       docx: 9.3.0
 
+  '@m2d/image@0.0.4(docx@9.3.0)':
+    dependencies:
+      '@m2d/core': 0.0.3(docx@9.3.0)
+      docx: 9.3.0
+
   '@m2d/list@0.0.3(docx@9.3.0)':
     dependencies:
       '@m2d/core': 0.0.3(docx@9.3.0)
@@ -4768,7 +4782,7 @@ snapshots:
       globby: 11.1.0
       read-yaml-file: 1.1.0
 
-  '@mayank1513/fork-me@2.1.3(@types/react@19.1.0)(next@15.2.4(@babel/core@7.26.10)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react@19.1.0)':
+  '@mayank1513/fork-me@2.1.3(@types/react@19.1.0)(next@15.2.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react@19.1.0)':
     dependencies:
       '@types/react': 19.1.0
       react: 19.1.0
@@ -6684,6 +6698,13 @@ snapshots:
 
   kolorist@1.8.0: {}
 
+  kosha@1.0.0(@types/react@19.1.0)(next@15.2.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react@19.1.0):
+    dependencies:
+      '@types/react': 19.1.0
+      react: 19.1.0
+    optionalDependencies:
+      next: 15.2.4(@babel/core@7.26.10)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3)
+
   langium@3.3.1:
     dependencies:
       chevrotain: 11.0.3
@@ -7495,7 +7516,7 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
-  r18gs@1.1.3(@types/react@19.1.0)(next@15.2.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react@19.1.0):
+  r18gs@1.1.3(@types/react@19.1.0)(next@15.2.4(@babel/core@7.26.10)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react@19.1.0):
     dependencies:
       '@types/react': 19.1.0
       react: 19.1.0
@@ -7536,7 +7557,7 @@ snapshots:
 
   react-refresh@0.14.2: {}
 
-  react18-loaders@1.1.4(@types/react@19.1.0)(next@15.2.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react@19.1.0):
+  react18-loaders@1.1.4(@types/react@19.1.0)(next@15.2.4(@babel/core@7.26.10)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react@19.1.0):
     dependencies:
       '@types/react': 19.1.0
       r18gs: 2.1.0(@types/react@19.1.0)(react@19.1.0)
@@ -7544,10 +7565,10 @@ snapshots:
     optionalDependencies:
       next: 15.2.4(@babel/core@7.26.10)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3)
 
-  react18-themes@3.2.0(@types/react@19.1.0)(next@15.2.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react@19.1.0):
+  react18-themes@3.2.0(@types/react@19.1.0)(next@15.2.4(@babel/core@7.26.10)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react@19.1.0):
     dependencies:
       '@types/react': 19.1.0
-      r18gs: 1.1.3(@types/react@19.1.0)(next@15.2.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react@19.1.0)
+      r18gs: 1.1.3(@types/react@19.1.0)(next@15.2.4(@babel/core@7.26.10)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3))(react@19.1.0)
       react: 19.1.0
     optionalDependencies:
       next: 15.2.4(@babel/core@7.26.10)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.86.3)
