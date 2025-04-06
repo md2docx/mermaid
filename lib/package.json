@@ -2,7 +2,7 @@
   "name": "@m2d/mermaid",
   "author": "Mayank Kumar Chaudhari (https://mayank-chaudhari.vercel.app)",
   "private": false,
-  "version": "0.0.0",
+  "version": "0.0.1-alpha.0",
   "description": "",
   "license": "MPL-2.0",
   "main": "./dist/index.js",
