@@ -1,172 +1,81 @@
-import { IPlugin, Optional } from "@m2d/core";
-import { MutableParaOptions } from "@m2d/core/utils";
-import type { IImageOptions } from "docx";
+import { IPlugin, SVG } from "@m2d/core";
 import mermaid, { MermaidConfig } from "mermaid";
 
-interface IDefaultMermaidPluginOptions {
-  mermaidConfig: MermaidConfig;
-  scale: number;
-  imgType: "png" | "jpg" | "bmp" | "gif";
-  paraProps: MutableParaOptions;
-  maxW: number /** inch */;
-  maxH: number /** inch */;
-  dpi: number;
+interface IMermaidPluginOptions {
+  /**
+   * Plugin options for configuring Mermaid rendering.
+   *
+   * You can pass a partial MermaidConfig object to customize rendering behavior.
+   * For available options, refer to the Mermaid documentation:
+   * @see https://mermaid.js.org/configuration.html
+   */
+  mermaidConfig?: MermaidConfig;
 }
 
-type IMermaidPluginOptions = Optional<Omit<IDefaultMermaidPluginOptions, "dpi">>;
-
+/**
+ * Default Mermaid rendering configuration.
+ *
+ * We explicitly set `fontFamily` to "sans-serif" because Mermaid's default font stack
+ * sometimes includes fonts that can cause rendering glitches or inconsistent diagrams.
+ * Setting it ensures more stable and predictable output across platforms.
+ *
+ * @see https://mermaid.js.org/configuration.html#fontfamily
+ */
 const defaultMermaidConfig: MermaidConfig = {
   fontFamily: "sans-serif",
 };
 
-const defaultOptions: IDefaultMermaidPluginOptions = {
-  mermaidConfig: defaultMermaidConfig,
-  scale: 4,
-  paraProps: {
-    alignment: "center",
-  },
-  imgType: "png",
-  // Assuming A4, portrait, and normal page margins
-  maxW: 6.3,
-  maxH: 9.7,
-  dpi: 96,
-};
-
-const svgToBase64 = (svg: string): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    const blob = new Blob([svg], { type: "image/svg+xml" });
-    const reader = new FileReader();
-
-    reader.onloadend = () => resolve(reader.result as string);
-    reader.onerror = reject;
-
-    reader.readAsDataURL(blob); // Automatically handles encoding
-  });
-};
-
-const tightlyCropMermaidSvg = async (
-  svgRaw: string,
-  container: HTMLDivElement,
-): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    container.innerHTML = svgRaw;
-    const svgEl = container.querySelector("svg");
-
-    if (!svgEl) return reject(new Error("No <svg> found"));
-
-    requestAnimationFrame(() => {
-      try {
-        const bbox = svgEl.getBBox();
-
-        // Clone the SVG
-        const clonedSvg = svgEl.cloneNode(true) as SVGSVGElement;
-
-        // Optional margin
-        const margin = 4;
-        const x = bbox.x - margin;
-        const y = bbox.y - margin;
-        const width = bbox.width + margin * 2;
-        const height = bbox.height + margin * 2;
-
-        clonedSvg.setAttribute("viewBox", `${x} ${y} ${width} ${height}`);
-        clonedSvg.setAttribute("width", `${width}`);
-        clonedSvg.setAttribute("height", `${height}`);
-        clonedSvg.removeAttribute("style");
-
-        const result = new XMLSerializer().serializeToString(clonedSvg);
-        svgEl.remove();
-        resolve(result);
-      } catch (err) {
-        svgEl.remove();
-        reject(err);
-      }
-    });
-  });
-};
-
-const svgToImageProps = async (
-  svg: string,
-  container: HTMLDivElement,
-  options: IDefaultMermaidPluginOptions,
-): Promise<IImageOptions> => {
-  const img = new Image();
-  container.appendChild(img);
-  const svgDataURL = await svgToBase64(svg);
-  img.src = svgDataURL;
-  await new Promise(resolve => (img.onload = resolve));
-
-  const width = img.width * options.scale;
-  const height = img.height * options.scale;
-
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
-
-  /* v8 ignore start - canvas is not available in JSDOM */
-  if (!ctx) throw new Error("Canvas context not available");
-
-  canvas.width = width;
-  canvas.height = height;
-  ctx.drawImage(img, 0, 0, width, height);
-
-  const data = canvas.toDataURL(`image/${options.imgType}`);
-
-  img.remove();
-
-  const scale = Math.min(
-    (options.maxW * options.dpi) / width,
-    (options.maxH * options.dpi) / height,
-  );
-  return {
-    type: options.imgType,
-    data,
-    transformation: {
-      width: width * scale,
-      height: height * scale,
-    },
-  };
-  /* v8 ignore stop */
-};
-
 /**
  * Mermaid plugin for @m2d/core.
- * This plugin provides support for custom mermaid transformation within Markdown content
- * during conversion to DOCX format.
+ * This plugin detects Mermaid or Mindmap code blocks and converts them into SVG nodes
+ * that are later rendered as images in the generated DOCX document.
  */
-export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = options_ => {
-  const options = { ...defaultOptions, options_ };
-  mermaid.initialize({ ...defaultMermaidConfig, ...options_?.mermaidConfig });
-  const container = document.createElement("div");
-  container.style = `height:${options.maxH}in;width:${options.maxW}in;position:absolute;left:-2500vw;`;
-  document.body.appendChild(container);
-  /** px/inch */
-  options.dpi = parseFloat(getComputedStyle(container).width) / options.maxW;
+export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = options => {
+  // Initialize Mermaid with user-provided and default config
+  mermaid.initialize({ ...defaultMermaidConfig, ...options?.mermaidConfig });
+
   return {
     /**
-     * Converts mermaid code blocks to image nodes.
+     * Processes block-level MDAST nodes.
+     * Converts `code` blocks tagged as `mermaid`, `mmd`, or `mindmap` into DOCX-compatible SVG nodes.
      */
-    block: async (docx, node, paraProps) => {
+    block: async (_docx, node) => {
+      // Only process code blocks with a supported language tag
       if (node.type === "code" && /(mindmap|mermaid|mmd)/.test(node.lang ?? "")) {
+        // Automatically prefix 'mindmap' if missing for mindmap blocks
         if (node.lang === "mindmap" && !node.value.startsWith("mindmap"))
           node.value = `mindmap\n${node.value}`;
 
+        // Generate a unique ID for Mermaid rendering — must not start with a number
+        const mId = `m${crypto.randomUUID()}`;
+
         try {
-          // id attribute can not start with a number
-          const { svg } = await mermaid.render(`m${crypto.randomUUID()}`, node.value);
+          // Render Mermaid SVG from code content
+          const { svg } = await mermaid.render(mId, node.value);
 
-          Object.assign(node, { type: "" });
+          // Create an extended MDAST-compatible SVG node
+          const svgNode: SVG = {
+            type: "svg",
+            id: mId,
+            value: svg,
+            // Store original Mermaid source in data for traceability/debug
+            // @ts-expect-error -- Add [key]: any to data
+            data: { mermaid: node.value },
+          };
 
-          return [
-            new docx.Paragraph({
-              children: [new docx.ImageRun(await svgToImageProps(svg, container, options))],
-              ...paraProps,
-              ...options.paraProps,
-            }),
-          ];
+          // Replace the code block with a paragraph that contains the SVG
+          Object.assign(node, {
+            type: "paragraph",
+            children: [svgNode],
+            data: { alignment: "center" }, // center-align diagram
+          });
         } catch (error) {
+          // Log error but continue gracefully
           console.error(error);
         }
       }
 
+      // Always return empty since we’re mutating the node in-place
       return [];
     },
   };
