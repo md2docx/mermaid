@@ -1,19 +1,18 @@
-# @m2d/mermaid
+# `@m2d/mermaid`
 
 [![test](https://github.com/md2docx/mermaid/actions/workflows/test.yml/badge.svg)](https://github.com/md2docx/mermaid/actions/workflows/test.yml) [![Maintainability](https://api.codeclimate.com/v1/badges/aa896ec14c570f3bb274/maintainability)](https://codeclimate.com/github/md2docx/mermaid/maintainability) [![codecov](https://codecov.io/gh/md2docx/mermaid/graph/badge.svg)](https://codecov.io/gh/md2docx/mermaid) [![Version](https://img.shields.io/npm/v/@m2d/mermaid.svg?colorB=green)](https://www.npmjs.com/package/@m2d/mermaid) [![Downloads](https://img.jsdelivr.com/img.shields.io/npm/d18m/@m2d/mermaid.svg)](https://www.npmjs.com/package/@m2d/mermaid) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/@m2d/mermaid)
 
-> Emoji shortcode support for `mdast2docx`
-
-This plugin adds support for emoji shortcodes (e.g., `:smile:`, `:rocket:`) in your Markdown-to-DOCX conversion pipeline. It replaces recognized emoji shortcodes with their corresponding Unicode characters during the MDAST transformation.
+> 🧩 Plugin for [@m2d/core](https://www.npmjs.com/package/@m2d/core) that renders Mermaid diagrams and mindmaps from Markdown code blocks and converts them into DOCX-compatible SVG images.
 
 ---
 
 ## ✨ Features
 
-- Converts emoji shortcodes to Unicode emojis (e.g., `:tada:` → 🎉)
-- Compatible with [`@m2d/core`](https://www.npmjs.com/package/@m2d/core)
-- Works seamlessly within the `mdast2docx` plugin ecosystem
-- Easy to integrate and lightweight
+- Supports `mermaid`, `mmd`, and `mindmap` code blocks.
+- Converts diagrams to inline SVG for high-quality DOCX rendering.
+- Compatible with the `mdast2docx` and `@m2d` plugin ecosystem.
+- Fully customizable via [Mermaid config options](https://mermaid.js.org/configuration.html).
+- Handles rendering quirks with default sane settings (e.g., `fontFamily`).
 
 ---
 
@@ -31,35 +30,48 @@ yarn add @m2d/mermaid
 
 **_or_**
 
-```bash
+````bash
 npm add @m2d/mermaid
+
+---
+
+## 📦 Usage
+
+```ts
+import { mermaidPlugin } from "@m2d/mermaid";
+import { imagePlugin } from "@m2d/image";
+import { toDocx } from "@m2d/core";
+
+const converter = await toDocx({
+  plugins: [mermaidPlugin(), imagePlugin()],
+});
+
+const docxBuffer = await converter.convert(`# Diagram\n\n\`\`\`mermaid\ngraph TD; A-->B;\`\`\``);
+````
+
+> You can also use `mindmap` or `mmd` as code block languages. The plugin will auto-adjust for Mermaid syntax quirks.
+
+---
+
+## ⚙️ Plugin Options
+
+```ts
+mermaidPlugin({
+  mermaidConfig: {
+    theme: "default",
+    fontFamily: "Arial",
+    // See all options: https://mermaid.js.org/configuration.html
+  },
+});
 ```
 
 ---
 
 ## 🧠 How It Works
 
-This plugin scans all text nodes for emoji shortcodes (e.g., `:fire:`, `:sparkles:`) and replaces them with matching Unicode emojis using a predefined emoji JSON mapping.
-
----
-
-## 🔍 Emoji Support
-
-It uses the [GitHub-style emoji shortcodes](https://github.com/ikatyang/emoji-cheat-sheet) and more — if a shortcode is not recognized, it will remain unchanged.
-
----
-
-## 🛠️ Development
-
-```bash
-# Clone and install dependencies
-git clone https://github.com/md2docx/emoji-plugin
-cd emoji-plugin
-npm install
-
-# Build / Test / Dev
-npm run build
-```
+- Scans for code blocks with language `mermaid`, `mmd`, or `mindmap`.
+- Uses [Mermaid](https://mermaid.js.org) to render diagrams as SVG.
+- Injects the SVG as an `mdast` node, ready for DOCX embedding.
 
 ---
 
