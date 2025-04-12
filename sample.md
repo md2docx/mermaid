@@ -85,6 +85,130 @@ classDiagram
     }
 ```
 
+### 🐾 **Basic Class Diagram**
+
+```mermaid
+classDiagram
+  class Person {
+    +String name
+    +int age
+    +greet()
+  }
+
+  class Student {
+    +int rollNumber
+    +attendClass()
+  }
+
+  Person <|-- Student
+```
+
+---
+
+### 💼 **2. Class Diagram with Interfaces and Abstracts**
+
+```mermaid
+classDiagram
+  class Animal {
+    +String name
+    +int age
+    +eat()
+    +sleep()
+  }
+
+  class Mammal {
+    +hasFur: boolean
+  }
+
+  class Bird {
+    +canFly: boolean
+  }
+
+  class Dog {
+    +bark()
+  }
+
+  class Eagle {
+    +swoop()
+  }
+
+  Animal <|-- Mammal
+  Animal <|-- Bird
+  Mammal <|-- Dog
+  Bird <|-- Eagle
+```
+
+---
+
+### 🧩 **3. With Static Members and Access Modifiers**
+
+```mermaid
+classDiagram
+  class Logger {
+    -String level
+    +log(msg: String)
+    +warn(msg: String)
+    +error(msg: String)
+    +static getInstance(): Logger
+  }
+```
+
+---
+
+### 🧱 **4. Diagram with Relationships**
+
+```mermaid
+classDiagram
+  class Engine {
+    +start()
+    +stop()
+  }
+
+  class Car {
+    -Engine engine
+    +drive()
+    +brake()
+  }
+
+  class Driver {
+    +name: String
+    +drive(car: Car)
+  }
+
+  Car --> Engine : has-a
+  Driver --> Car : drives
+```
+
+---
+
+### 📦 **5. Namespaces or Modules Example**
+
+```mermaid
+classDiagram
+  class app.models.User {
+    +id: int
+    +name: string
+    +email: string
+  }
+
+  class app.services.AuthService {
+    +login(email, password)
+    +logout()
+  }
+
+  class app.controllers.AuthController {
+    +handleLogin()
+    +handleLogout()
+  }
+
+  app.controllers.AuthController --> app.services.AuthService
+  app.services.AuthService --> app.models.User
+```
+
+---
+
+Would you like me to batch-render these into SVGs or convert them for DOCX-friendly images?
+
 ## 4. State Diagram
 
 ```mermaid

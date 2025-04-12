@@ -23,6 +23,7 @@ interface IMermaidPluginOptions {
  */
 const defaultMermaidConfig: MermaidConfig = {
   fontFamily: "sans-serif",
+  suppressErrorRendering: true,
 };
 
 /**
@@ -59,7 +60,6 @@ export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = optio
             id: mId,
             value: svg,
             // Store original Mermaid source in data for traceability/debug
-            // @ts-expect-error -- Add [key]: any to data
             data: { mermaid: node.value },
           };
 
