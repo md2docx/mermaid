@@ -1,5 +1,11 @@
 # @m2d/mermaid
 
+## 0.0.3
+
+### Patch Changes
+
+- 0d972bf: suppressErrorRendering true by default
+
 ## 0.0.2
 
 ### Patch Changes
