@@ -53,7 +53,10 @@ export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = optio
     block: async (_docx, node) => {
       // Only process code blocks with a supported language tag
       if (node.type === "code" && /(mindmap|mermaid|mmd)/.test(node.lang ?? "")) {
-        let value = node.value;
+        let value = node.value
+          .split("\n")
+          .map(line => line.trim())
+          .join("\n");
         // Automatically prefix 'mindmap' if missing for mindmap blocks
         if (node.lang === "mindmap" && !value.startsWith("mindmap")) value = `mindmap\n${value}`;
 
