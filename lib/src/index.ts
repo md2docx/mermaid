@@ -10,6 +10,11 @@ interface IMermaidPluginOptions {
    * @see https://mermaid.js.org/configuration.html
    */
   mermaidConfig?: MermaidConfig;
+  /**
+   * Optional cache for storing Mermaid source code and rendered SVGs.
+   * This can be useful for debugging or caching purposes.
+   */
+  cache?: Record<string, string>;
 }
 
 /**
@@ -26,6 +31,8 @@ const defaultMermaidConfig: MermaidConfig = {
   suppressErrorRendering: true,
 };
 
+const mermaidCache: Record<string, Record<string, string>> = {};
+
 /**
  * Mermaid plugin for @m2d/core.
  * This plugin detects Mermaid or Mindmap code blocks and converts them into SVG nodes
@@ -33,7 +40,10 @@ const defaultMermaidConfig: MermaidConfig = {
  */
 export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = options => {
   // Initialize Mermaid with user-provided and default config
-  mermaid.initialize({ ...defaultMermaidConfig, ...options?.mermaidConfig });
+  const finalConfig = { ...defaultMermaidConfig, ...options?.mermaidConfig };
+  mermaid.initialize(finalConfig);
+
+  const cache = Object.assign(options?.cache ?? {}, mermaidCache[JSON.stringify(finalConfig)]);
 
   return {
     /**
@@ -51,8 +61,12 @@ export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = optio
         const mId = `m${crypto.randomUUID()}`;
 
         try {
-          // Render Mermaid SVG from code content
-          const { svg } = await mermaid.render(mId, node.value);
+          let svg = cache[node.value];
+          if (!svg) {
+            // Render Mermaid SVG from code content
+            svg = (await mermaid.render(mId, node.value)).svg;
+            cache[node.value] = svg;
+          }
 
           // Create an extended MDAST-compatible SVG node
           const svgNode: SVG = {
