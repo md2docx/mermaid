@@ -14,7 +14,7 @@ interface IMermaidPluginOptions {
    * Optional cache for storing Mermaid source code and rendered SVGs.
    * This can be useful for debugging or caching purposes.
    */
-  cache?: Record<string, string>;
+  cache?: Record<string, Promise<{ svg: string }>>;
 }
 
 /**
@@ -31,7 +31,7 @@ const defaultMermaidConfig: MermaidConfig = {
   suppressErrorRendering: true,
 };
 
-const mermaidCache: Record<string, Record<string, string>> = {};
+const mermaidCache: Record<string, Record<string, Promise<{ svg: string }>>> = {};
 
 /**
  * Mermaid plugin for @m2d/core.
@@ -53,20 +53,16 @@ export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = optio
     block: async (_docx, node) => {
       // Only process code blocks with a supported language tag
       if (node.type === "code" && /(mindmap|mermaid|mmd)/.test(node.lang ?? "")) {
+        let value = node.value;
         // Automatically prefix 'mindmap' if missing for mindmap blocks
-        if (node.lang === "mindmap" && !node.value.startsWith("mindmap"))
-          node.value = `mindmap\n${node.value}`;
+        if (node.lang === "mindmap" && !value.startsWith("mindmap")) value = `mindmap\n${value}`;
 
         // Generate a unique ID for Mermaid rendering — must not start with a number
         const mId = `m${crypto.randomUUID()}`;
 
         try {
-          let svg = cache[node.value];
-          if (!svg) {
-            // Render Mermaid SVG from code content
-            svg = (await mermaid.render(mId, node.value)).svg;
-            cache[node.value] = svg;
-          }
+          cache[value] = cache[value] ?? mermaid.render(mId, value);
+          const { svg } = await cache[value];
 
           // Create an extended MDAST-compatible SVG node
           const svgNode: SVG = {
@@ -74,7 +70,7 @@ export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = optio
             id: mId,
             value: svg,
             // Store original Mermaid source in data for traceability/debug
-            data: { mermaid: node.value },
+            data: { mermaid: value },
           };
 
           // Replace the code block with a paragraph that contains the SVG
