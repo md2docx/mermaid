@@ -53,7 +53,9 @@ const provenance = visibility.toLowerCase() === "public" ? "--provenance" : "";
 
 try {
   /** Publish to NPM */
-  execSync(`cd lib && pnpm build && npm publish ${provenance} --access public`);
+  execSync(
+    `cd lib && pnpm build && npm publish ${provenance} --access public && cp CHANGELOG.md ..`,
+  );
 } catch (err) {
   console.error("Failed to publish to NPM -- ", err);
 }
