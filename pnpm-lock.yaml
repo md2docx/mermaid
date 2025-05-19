@@ -34,8 +34,8 @@ importers:
   examples/nextjs:
     dependencies:
       '@m2d/core':
-        specifier: ^1.0.0
-        version: 1.0.0(docx@9.5.0)
+        specifier: ^1.0.1
+        version: 1.0.1(docx@9.5.0)
       '@m2d/emoji':
         specifier: ^0.1.1
         version: 0.1.1(docx@9.5.0)
@@ -110,8 +110,8 @@ importers:
   examples/vite:
     dependencies:
       '@m2d/core':
-        specifier: ^1.0.0
-        version: 1.0.0(docx@9.5.0)
+        specifier: ^1.0.1
+        version: 1.0.1(docx@9.5.0)
       '@m2d/emoji':
         specifier: ^0.1.1
         version: 0.1.1(docx@9.5.0)
@@ -165,8 +165,8 @@ importers:
   lib:
     dependencies:
       '@m2d/core':
-        specifier: ^1.0.0
-        version: 1.0.0(docx@9.5.0)
+        specifier: ^1.0.1
+        version: 1.0.1(docx@9.5.0)
       mermaid:
         specifier: ^11.6.0
         version: 11.6.0
@@ -255,8 +255,8 @@ importers:
   packages/shared:
     dependencies:
       '@m2d/core':
-        specifier: ^1.0.0
-        version: 1.0.0(docx@9.5.0)
+        specifier: ^1.0.1
+        version: 1.0.1(docx@9.5.0)
       '@m2d/emoji':
         specifier: ^0.1.1
         version: 0.1.1(docx@9.5.0)
@@ -929,8 +929,8 @@ packages:
     peerDependencies:
       docx: ^9.3.0
 
-  '@m2d/core@1.0.0':
-    resolution: {integrity: sha512-G+GqUI0BETpozbDLvUHsuA4KxgYbqgHt/ymBWOjdLmSs45PtVC8yIpR1g70aiR8lR+KaDk+78l0WWuxOVU+cXA==}
+  '@m2d/core@1.0.1':
+    resolution: {integrity: sha512-e/087KHtrDSycYpTNfjxj6K5VzxDn2rKUTEu4sRZ26YAyFslwS3jn3QBAZM7mDD1/9haS62qiXuQaLOnZTTVEg==}
     peerDependencies:
       docx: ^9.3.0
 
@@ -960,8 +960,8 @@ packages:
       docx: ^9.3.0
       remark-math: ^6.0.0
 
-  '@m2d/mdast@0.1.4':
-    resolution: {integrity: sha512-8kHMHdP7hJEPsSqmLEMQKBDmioJEpqSv8C8Ue2sMXTuhVhwMm0LiW3okEDL0E30LO1oNq4G+CDRyGselXf4cpg==}
+  '@m2d/mdast@0.1.6':
+    resolution: {integrity: sha512-TlJySDxhPmhUNpUJe3ZMWnld93DjAVNRT5g5XpUJnzckD+WhtSIjLM/AD2a1m1gB88pLxAg2QdtSuvF2h6NR0w==}
     peerDependencies:
       docx: ^9.3.0
 
@@ -4717,18 +4717,17 @@ snapshots:
 
   '@m2d/core@0.0.4(docx@9.5.0)':
     dependencies:
-      '@m2d/mdast': 0.1.4(docx@9.5.0)
+      '@m2d/mdast': 0.1.6(docx@9.5.0)
       docx: 9.5.0
 
   '@m2d/core@0.0.5(docx@9.5.0)':
     dependencies:
-      '@m2d/mdast': 0.1.4(docx@9.5.0)
+      '@m2d/mdast': 0.1.6(docx@9.5.0)
       docx: 9.5.0
 
-  '@m2d/core@1.0.0(docx@9.5.0)':
+  '@m2d/core@1.0.1(docx@9.5.0)':
     dependencies:
-      '@m2d/html': 1.0.1(docx@9.5.0)
-      '@m2d/mdast': 0.1.4(docx@9.5.0)
+      '@m2d/mdast': 0.1.6(docx@9.5.0)
       docx: 9.5.0
 
   '@m2d/emoji@0.1.1(docx@9.5.0)':
@@ -4758,7 +4757,7 @@ snapshots:
       latex-math: 0.0.2
       remark-math: 6.0.0
 
-  '@m2d/mdast@0.1.4(docx@9.5.0)':
+  '@m2d/mdast@0.1.6(docx@9.5.0)':
     dependencies:
       docx: 9.5.0
 

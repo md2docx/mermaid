@@ -51,10 +51,7 @@ export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = optio
 
     // Only process code blocks with a supported language tag
     if (node.type === "code" && /(mindmap|mermaid|mmd)/.test(node.lang ?? "")) {
-      let value = node.value
-        .split("\n")
-        .map(line => line.trim())
-        .join("\n");
+      let value = node.value;
       // Automatically prefix 'mindmap' if missing for mindmap blocks
       if (node.lang === "mindmap" && !value.startsWith("mindmap")) value = `mindmap\n${value}`;
 
@@ -69,7 +66,7 @@ export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = optio
           type: "svg",
           value: cache[value],
           // Store original Mermaid source in data for traceability/debug
-          data: { mermaid: node.value },
+          data: { mermaid: value },
         };
 
         // Replace the code block with a paragraph that contains the SVG
