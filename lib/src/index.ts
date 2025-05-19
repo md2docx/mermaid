@@ -1,5 +1,5 @@
 import { IPlugin } from "@m2d/core";
-import { SVG } from "@m2d/mdast";
+import { Parent, Root, SVG, PhrasingContent, RootContent } from "@m2d/mdast";
 import mermaid, { MermaidConfig } from "mermaid";
 
 interface IMermaidPluginOptions {
@@ -46,49 +46,51 @@ export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = optio
 
   const cache = Object.assign(options?.cache ?? {}, mermaidCache[JSON.stringify(finalConfig)]);
 
+  const preprocess = (node: Root | RootContent | PhrasingContent) => {
+    // Preprocess the AST to detect and cache Mermaid or Mindmap blocks
+    (node as Parent).children?.forEach(preprocess);
+
+    // Only process code blocks with a supported language tag
+    if (node.type === "code" && /(mindmap|mermaid|mmd)/.test(node.lang ?? "")) {
+      let value = node.value
+        .split("\n")
+        .map(line => line.trim())
+        .join("\n");
+      // Automatically prefix 'mindmap' if missing for mindmap blocks
+      if (node.lang === "mindmap" && !value.startsWith("mindmap")) value = `mindmap\n${value}`;
+
+      // Generate a unique ID for Mermaid rendering — must not start with a number
+      const mId = `m${crypto.randomUUID()}`;
+
+      try {
+        cache[value] = cache[value] ?? mermaid.render(mId, value);
+
+        // Create an extended MDAST-compatible SVG node
+        const svgNode: SVG = {
+          type: "svg",
+          value: cache[value],
+          // Store original Mermaid source in data for traceability/debug
+          data: { mermaid: node.value },
+        };
+
+        // Replace the code block with a paragraph that contains the SVG
+        Object.assign(node, {
+          type: "paragraph",
+          children: [svgNode],
+          data: { alignment: "center" }, // center-align diagram
+        });
+      } catch (error) {
+        // Log error but continue gracefully
+        console.error(error);
+      }
+    }
+  };
+
   return {
     /**
      * Processes block-level MDAST nodes.
      * Converts `code` blocks tagged as `mermaid`, `mmd`, or `mindmap` into DOCX-compatible SVG nodes.
      */
-    block: async (_docx, node) => {
-      // Only process code blocks with a supported language tag
-      if (node.type === "code" && /(mindmap|mermaid|mmd)/.test(node.lang ?? "")) {
-        let value = node.value
-          .split("\n")
-          .map(line => line.trim())
-          .join("\n");
-        // Automatically prefix 'mindmap' if missing for mindmap blocks
-        if (node.lang === "mindmap" && !value.startsWith("mindmap")) value = `mindmap\n${value}`;
-
-        // Generate a unique ID for Mermaid rendering — must not start with a number
-        const mId = `m${crypto.randomUUID()}`;
-
-        try {
-          cache[value] = cache[value] ?? mermaid.render(mId, value);
-
-          // Create an extended MDAST-compatible SVG node
-          const svgNode: SVG = {
-            type: "svg",
-            value: cache[value],
-            // Store original Mermaid source in data for traceability/debug
-            data: { mermaid: node.value },
-          };
-
-          // Replace the code block with a paragraph that contains the SVG
-          Object.assign(node, {
-            type: "paragraph",
-            children: [svgNode],
-            data: { alignment: "center" }, // center-align diagram
-          });
-        } catch (error) {
-          // Log error but continue gracefully
-          console.error(error);
-        }
-      }
-
-      // Always return empty since we’re mutating the node in-place
-      return [];
-    },
+    preprocess,
   };
 };
