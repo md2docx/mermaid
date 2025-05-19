@@ -55,6 +55,12 @@ export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = optio
       // Automatically prefix 'mindmap' if missing for mindmap blocks
       if (node.lang === "mindmap" && !value.startsWith("mindmap")) value = `mindmap\n${value}`;
 
+      if (!/^mindmap|gantt|gitGraph|timeline/i.test(value))
+        value = value
+          .split("\n")
+          .map(line => line.trim())
+          .join("\n");
+
       // Generate a unique ID for Mermaid rendering — must not start with a number
       const mId = `m${crypto.randomUUID()}`;
 
