@@ -1,4 +1,5 @@
-import { IPlugin, SVG } from "@m2d/core";
+import { IPlugin } from "@m2d/core";
+import { SVG } from "@m2d/mdast";
 import mermaid, { MermaidConfig } from "mermaid";
 
 interface IMermaidPluginOptions {
@@ -65,15 +66,13 @@ export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = optio
 
         try {
           cache[value] = cache[value] ?? mermaid.render(mId, value);
-          const { svg } = await cache[value];
 
           // Create an extended MDAST-compatible SVG node
           const svgNode: SVG = {
             type: "svg",
-            id: mId,
-            value: svg,
+            value: cache[value],
             // Store original Mermaid source in data for traceability/debug
-            data: { mermaid: value },
+            data: { mermaid: node.value },
           };
 
           // Replace the code block with a paragraph that contains the SVG
