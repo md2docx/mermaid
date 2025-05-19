@@ -1,5 +1,4 @@
-import { IPlugin } from "@m2d/core";
-import { Parent, Root, SVG, PhrasingContent, RootContent } from "@m2d/mdast";
+import { IPlugin, Parent, Root, SVG, PhrasingContent, RootContent } from "@m2d/core";
 import mermaid, { MermaidConfig } from "mermaid";
 
 interface IMermaidPluginOptions {
@@ -80,7 +79,7 @@ export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = optio
           data: { alignment: "center" }, // center-align diagram
         });
       } catch (error) {
-        // Log error but continue gracefully
+        /* v8 ignore next 2 Log error but continue gracefully */
         console.error(error);
       }
     }
