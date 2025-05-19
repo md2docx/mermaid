@@ -1,5 +1,12 @@
 # @m2d/mermaid
 
+## 1.0.1
+
+### Patch Changes
+
+- 028630d: feat: trim mermaid code lines only for diagram types where it is not critical.
+- be458aa: fix: Do not trim mermaid charts
+
 ## 1.0.0
 
 ### Major Changes
