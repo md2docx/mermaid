@@ -1,4 +1,3 @@
-import { Root, RootContent, PhrasingContent, Parent, SVG } from "@m2d/core";
 import { vi } from "vitest";
 
 // Mock createImageBitmap
@@ -121,34 +120,10 @@ document.createElement = vi.fn((tagName: string) => {
   return originalCreateElement.call(document, tagName);
 });
 
-vi.mock("@m2d/mermaid", () => {
-  const preprocess = (node: Root | RootContent | PhrasingContent) => {
-    // Preprocess the AST to detect and cache Mermaid or Mindmap blocks
-    (node as Parent).children?.forEach(preprocess);
-
-    // Only process code blocks with a supported language tag
-    if (node.type === "code" && /(mindmap|mermaid|mmd)/.test(node.lang ?? "")) {
-      // Create an extended MDAST-compatible SVG node
-      const svgNode: SVG = {
-        type: "svg",
-        value: '<svg xmlns="http://www.w3.org/2000/svg"><text>Mock</text></svg>',
-        // Store original Mermaid source in data for traceability/debug
-        data: { mermaid: node.value },
-      };
-
-      // Replace the code block with a paragraph that contains the SVG
-      Object.assign(node, {
-        type: "paragraph",
-        children: [svgNode],
-        data: { alignment: "center" }, // center-align diagram
-      });
-    }
-  };
+vi.mock("@mermaid/core/cache", () => {
   return {
-    __esModule: true,
-    mermaidPlugin: () => ({
-      preprocess,
-    }),
+    createPersistentCache: (mermaidProcessor: Function) => mermaidProcessor,
+    simpleCleanup: vi.fn(),
   };
 });
 
