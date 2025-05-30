@@ -2,7 +2,7 @@
   "name": "@m2d/mermaid",
   "author": "Mayank Kumar Chaudhari (https://mayank-chaudhari.vercel.app)",
   "private": false,
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Enhance Markdown-to-DOCX conversion with Mermaid and mindmap diagram support using this plugin for @m2d/core. Converts code blocks into SVG images with customizable Mermaid config.",
   "license": "MPL-2.0",
   "main": "./dist/index.js",
@@ -34,7 +34,7 @@
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@types/node": "^22.15.24",
+    "@types/node": "^22.15.27",
     "@vitest/coverage-v8": "^3.1.4",
     "docx": "^9.5.0",
     "esbuild-plugin-rdi": "^0.0.0",
@@ -47,7 +47,7 @@
     "vitest": "^3.1.4"
   },
   "dependencies": {
-    "@m2d/core": "^1.0.2",
+    "@m2d/core": "^1.1.4",
     "mermaid": "^11.6.0"
   },
   "peerDependencies": {

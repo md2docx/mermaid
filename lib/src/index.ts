@@ -1,28 +1,34 @@
-import { IPlugin, Parent, Root, SVG, PhrasingContent, RootContent } from "@m2d/core";
+import { IPlugin, Parent, Root, SVG, PhrasingContent, RootContent, Code } from "@m2d/core";
 import mermaid, { MermaidConfig } from "mermaid";
+import { simpleCleanup, createPersistentCache } from "@m2d/core/cache";
 
 interface IMermaidPluginOptions {
   /**
-   * Plugin options for configuring Mermaid rendering.
+   * Options for configuring Mermaid rendering.
    *
-   * You can pass a partial MermaidConfig object to customize rendering behavior.
-   * For available options, refer to the Mermaid documentation:
+   * Pass a partial MermaidConfig object to customize behavior.
+   * Refer to the Mermaid documentation for full configuration options:
    * @see https://mermaid.js.org/configuration.html
    */
   mermaidConfig?: MermaidConfig;
+
   /**
-   * Optional cache for storing Mermaid source code and rendered SVGs.
-   * This can be useful for debugging or caching purposes.
+   * Optional fixer function to repair invalid Mermaid code before retrying render.
    */
-  cache?: Record<string, Promise<{ svg: string }>>;
+  fixMermaid?: (mermaidCode: string, error: Error) => string;
+
+  /** Enable IndexedDB-based caching. @default true */
+  idb: boolean;
 }
 
+/** Namespace used for persistent cache cleanup */
+const NAMESPACE = "mmd";
+
 /**
- * Default Mermaid rendering configuration.
+ * Default configuration for Mermaid rendering.
  *
- * We explicitly set `fontFamily` to "sans-serif" because Mermaid's default font stack
- * sometimes includes fonts that can cause rendering glitches or inconsistent diagrams.
- * Setting it ensures more stable and predictable output across platforms.
+ * Sets a fixed `fontFamily` ("sans-serif") to avoid inconsistent
+ * rendering due to platform font differences.
  *
  * @see https://mermaid.js.org/configuration.html#fontfamily
  */
@@ -31,67 +37,76 @@ const defaultMermaidConfig: MermaidConfig = {
   suppressErrorRendering: true,
 };
 
-const mermaidCache: Record<string, Record<string, Promise<{ svg: string }>>> = {};
-
 /**
  * Mermaid plugin for @m2d/core.
- * This plugin detects Mermaid or Mindmap code blocks and converts them into SVG nodes
- * that are later rendered as images in the generated DOCX document.
+ * Detects `mermaid`, `mmd`, and `mindmap` code blocks and converts them to SVG.
+ * The resulting SVGs are later rendered as images in DOCX exports.
  */
 export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = options => {
-  // Initialize Mermaid with user-provided and default config
+  // Merge user config with defaults and initialize Mermaid
   const finalConfig = { ...defaultMermaidConfig, ...options?.mermaidConfig };
   mermaid.initialize(finalConfig);
 
-  const cache = Object.assign(options?.cache ?? {}, mermaidCache[JSON.stringify(finalConfig)]);
+  const mermaidProcessor = async (node: Code) => {
+    let value = node.value;
 
-  const preprocess = (node: Root | RootContent | PhrasingContent) => {
-    // Preprocess the AST to detect and cache Mermaid or Mindmap blocks
-    (node as Parent).children?.forEach(preprocess);
+    // Add missing "mindmap" prefix if needed
+    if (node.lang === "mindmap" && !value.startsWith("mindmap")) {
+      value = `mindmap\n${value}`;
+    }
 
-    // Only process code blocks with a supported language tag
-    if (node.type === "code" && /(mindmap|mermaid|mmd)/.test(node.lang ?? "")) {
-      let value = node.value;
-      // Automatically prefix 'mindmap' if missing for mindmap blocks
-      if (node.lang === "mindmap" && !value.startsWith("mindmap")) value = `mindmap\n${value}`;
+    // Normalize whitespace unless the diagram type is known to be sensitive
+    if (!/^mindmap|gantt|gitGraph|timeline/i.test(value)) {
+      value = value
+        .split("\n")
+        .map(line => line.trim())
+        .join("\n");
+    }
 
-      if (!/^mindmap|gantt|gitGraph|timeline/i.test(value))
-        value = value
-          .split("\n")
-          .map(line => line.trim())
-          .join("\n");
+    const mId = `m${crypto.randomUUID()}`; // Must not start with a number
 
-      // Generate a unique ID for Mermaid rendering — must not start with a number
-      const mId = `m${crypto.randomUUID()}`;
-
-      try {
-        cache[value] = cache[value] ?? mermaid.render(mId, value);
-
-        // Create an extended MDAST-compatible SVG node
-        const svgNode: SVG = {
-          type: "svg",
-          value: cache[value],
-          // Store original Mermaid source in data for traceability/debug
-          data: { mermaid: value },
-        };
-
-        // Replace the code block with a paragraph that contains the SVG
-        Object.assign(node, {
-          type: "paragraph",
-          children: [svgNode],
-          data: { alignment: "center" }, // center-align diagram
-        });
-      } catch (error) {
-        /* v8 ignore next 2 Log error but continue gracefully */
-        console.error(error);
+    try {
+      return await mermaid.render(mId, value);
+    } catch (error) {
+      /* v8 ignore next 8 Log error but continue gracefully */
+      console.warn(error); // Log and optionally retry
+      if (options?.fixMermaid) {
+        try {
+          return await mermaid.render(mId, options.fixMermaid(value, error as Error));
+        } catch (error1) {
+          console.warn(error1);
+        }
       }
     }
   };
 
+  const preprocess = (node: Root | RootContent | PhrasingContent) => {
+    // Recursively walk the AST
+    (node as Parent).children?.forEach(preprocess);
+
+    // Replace supported code blocks with async SVG nodes
+    if (node.type === "code" && /(mindmap|mermaid|mmd)/.test(node.lang ?? "")) {
+      const svgNode: SVG = {
+        type: "svg",
+        value: createPersistentCache(mermaidProcessor, NAMESPACE, [], options?.idb ?? true)(node),
+        data: { mermaid: node.value }, // Preserve original source
+      };
+
+      Object.assign(node, {
+        type: "paragraph",
+        children: [svgNode],
+        data: { alignment: "center" }, // Center-align diagram
+      });
+    }
+
+    // Clean up cached Mermaid entries older than 30 days
+    // Kept longer than image cache due to smaller size
+    simpleCleanup(30 * 24 * 60, NAMESPACE);
+  };
+
   return {
     /**
-     * Processes block-level MDAST nodes.
-     * Converts `code` blocks tagged as `mermaid`, `mmd`, or `mindmap` into DOCX-compatible SVG nodes.
+     * Transforms supported code blocks into centered SVGs for DOCX output.
      */
     preprocess,
   };
