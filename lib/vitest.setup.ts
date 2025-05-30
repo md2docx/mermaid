@@ -122,8 +122,9 @@ document.createElement = vi.fn((tagName: string) => {
 
 vi.mock("@mermaid/core/cache", () => {
   return {
+    __esModule: true,
     createPersistentCache: (mermaidProcessor: Function) => mermaidProcessor,
-    simpleCleanup: vi.fn(),
+    simpleCleanup: () => null,
   };
 });
 
