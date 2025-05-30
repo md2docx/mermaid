@@ -1,5 +1,11 @@
 # @m2d/mermaid
 
+## 1.1.0
+
+### Minor Changes
+
+- 90dd5a0: Implement caching using indexdb
+
 ## 1.0.1
 
 ### Patch Changes
