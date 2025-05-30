@@ -47,22 +47,7 @@ export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = optio
   const finalConfig = { ...defaultMermaidConfig, ...options?.mermaidConfig };
   mermaid.initialize(finalConfig);
 
-  const mermaidProcessor = async (node: Code) => {
-    let value = node.value;
-
-    // Add missing "mindmap" prefix if needed
-    if (node.lang === "mindmap" && !value.startsWith("mindmap")) {
-      value = `mindmap\n${value}`;
-    }
-
-    // Normalize whitespace unless the diagram type is known to be sensitive
-    if (!/^mindmap|gantt|gitGraph|timeline/i.test(value)) {
-      value = value
-        .split("\n")
-        .map(line => line.trim())
-        .join("\n");
-    }
-
+  const mermaidProcessor = async (value: string, _options: MermaidConfig) => {
     const mId = `m${crypto.randomUUID()}`; // Must not start with a number
 
     try {
@@ -86,10 +71,29 @@ export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = optio
 
     // Replace supported code blocks with async SVG nodes
     if (node.type === "code" && /(mindmap|mermaid|mmd)/.test(node.lang ?? "")) {
+      let value = node.value;
+
+      // Add missing "mindmap" prefix if needed
+      if (node.lang === "mindmap" && !value.startsWith("mindmap")) {
+        value = `mindmap\n${value}`;
+      }
+
+      // Normalize whitespace unless the diagram type is known to be sensitive
+      if (!/^mindmap|gantt|gitGraph|timeline/i.test(value)) {
+        value = value
+          .split("\n")
+          .map(line => line.trim())
+          .join("\n");
+      }
       const svgNode: SVG = {
         type: "svg",
-        value: createPersistentCache(mermaidProcessor, NAMESPACE, [], options?.idb ?? true)(node),
-        data: { mermaid: node.value }, // Preserve original source
+        value: createPersistentCache(
+          mermaidProcessor,
+          NAMESPACE,
+          ["type", "lang"],
+          options?.idb ?? true,
+        )(value, finalConfig),
+        data: { mermaid: value }, // Preserve original source
       };
 
       Object.assign(node, {
