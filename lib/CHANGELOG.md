@@ -1,5 +1,13 @@
 # @m2d/mermaid
 
+## 1.1.1
+
+### Patch Changes
+
+- 13df583: fix: account for mermaid config in the cache-key
+
+  - moving low cost mermaid clean up outside cache, avoiding duplicate data caching to IndexedDB
+
 ## 1.1.0
 
 ### Minor Changes
