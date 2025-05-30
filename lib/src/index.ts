@@ -19,6 +19,9 @@ interface IMermaidPluginOptions {
 
   /** Enable IndexedDB-based caching. @default true */
   idb: boolean;
+
+  /** Clean up the entries that are not used for following minutes. @default 30 * 24 * 60 -- that is 30 days */
+  maxAgeMinutes?: number;
 }
 
 /** Namespace used for persistent cache cleanup */
@@ -46,6 +49,12 @@ export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = optio
   // Merge user config with defaults and initialize Mermaid
   const finalConfig = { ...defaultMermaidConfig, ...options?.mermaidConfig };
   mermaid.initialize(finalConfig);
+
+  const maxAgeMinutes = options?.maxAgeMinutes ?? 30 * 24 * 60;
+
+  // Clean up cached Mermaid entries older maxAgeMinutes
+  // Kept longer than image cache due to smaller size
+  simpleCleanup(maxAgeMinutes, NAMESPACE);
 
   const mermaidProcessor = async (value: string, _options: MermaidConfig) => {
     const mId = `m${crypto.randomUUID()}`; // Must not start with a number
@@ -102,10 +111,6 @@ export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = optio
         data: { alignment: "center" }, // Center-align diagram
       });
     }
-
-    // Clean up cached Mermaid entries older than 30 days
-    // Kept longer than image cache due to smaller size
-    simpleCleanup(30 * 24 * 60, NAMESPACE);
   };
 
   return {

@@ -34,8 +34,8 @@ importers:
   examples/nextjs:
     dependencies:
       '@m2d/core':
-        specifier: ^1.1.4
-        version: 1.1.4(docx@9.5.0)
+        specifier: ^1.1.6
+        version: 1.1.6(docx@9.5.0)
       '@m2d/emoji':
         specifier: ^0.1.2
         version: 0.1.2(docx@9.5.0)
@@ -110,8 +110,8 @@ importers:
   examples/vite:
     dependencies:
       '@m2d/core':
-        specifier: ^1.1.4
-        version: 1.1.4(docx@9.5.0)
+        specifier: ^1.1.6
+        version: 1.1.6(docx@9.5.0)
       '@m2d/emoji':
         specifier: ^0.1.2
         version: 0.1.2(docx@9.5.0)
@@ -165,8 +165,8 @@ importers:
   lib:
     dependencies:
       '@m2d/core':
-        specifier: ^1.1.4
-        version: 1.1.4(docx@9.5.0)
+        specifier: ^1.1.6
+        version: 1.1.6(docx@9.5.0)
       mermaid:
         specifier: ^11.6.0
         version: 11.6.0
@@ -255,8 +255,8 @@ importers:
   packages/shared:
     dependencies:
       '@m2d/core':
-        specifier: ^1.1.4
-        version: 1.1.4(docx@9.5.0)
+        specifier: ^1.1.6
+        version: 1.1.6(docx@9.5.0)
       '@m2d/emoji':
         specifier: ^0.1.2
         version: 0.1.2(docx@9.5.0)
@@ -928,8 +928,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@m2d/core@1.1.4':
-    resolution: {integrity: sha512-hmGZ/ALhvMcLhSHfzDpfAq1TPKksdjprY8CSh81ItO1gaJFkFlrS8Uk8Po0aWAYukh4a4BjBGx87njsB9NAN0Q==}
+  '@m2d/core@1.1.6':
+    resolution: {integrity: sha512-9HEZqv5kFzFKVFrXY/RuK+v1vcXRVzkFh0C/cp0bGgZb9sZi2Ir+Mry/Bms//Lz8FlsFU0iJ3ffuQgcVSrzx8w==}
     peerDependencies:
       docx: ^9.3.0
 
@@ -964,8 +964,8 @@ packages:
     peerDependencies:
       docx: ^9.3.0
 
-  '@m2d/mermaid@1.0.1':
-    resolution: {integrity: sha512-BJp7DTGW+RukAExEbniVRvRj4j4N8z03Swto3yBBukb4t//ZzXlL5GWRi2HXzDKbci5A1t3KJ1bXgM8nsg7Row==}
+  '@m2d/mermaid@1.1.1':
+    resolution: {integrity: sha512-D389519l0Q+LfckFHpqqRxUEf1pTxJ3HOqk2RKMhRkKF1kgAXM2AmpEDPLwcTMe4nxYT+i7/XJbHWU94j29rcA==}
     peerDependencies:
       docx: ^9.3.0
 
@@ -4756,34 +4756,34 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@m2d/core@1.1.4(docx@9.5.0)':
+  '@m2d/core@1.1.6(docx@9.5.0)':
     dependencies:
       '@m2d/mdast': 0.1.9(docx@9.5.0)
       docx: 9.5.0
 
   '@m2d/emoji@0.1.2(docx@9.5.0)':
     dependencies:
-      '@m2d/core': 1.1.4(docx@9.5.0)
+      '@m2d/core': 1.1.6(docx@9.5.0)
       docx: 9.5.0
 
   '@m2d/html@1.0.3(docx@9.5.0)':
     dependencies:
-      '@m2d/core': 1.1.4(docx@9.5.0)
+      '@m2d/core': 1.1.6(docx@9.5.0)
       docx: 9.5.0
 
   '@m2d/image@1.1.0(docx@9.5.0)':
     dependencies:
-      '@m2d/core': 1.1.4(docx@9.5.0)
+      '@m2d/core': 1.1.6(docx@9.5.0)
       docx: 9.5.0
 
   '@m2d/list@0.0.6(docx@9.5.0)':
     dependencies:
-      '@m2d/core': 1.1.4(docx@9.5.0)
+      '@m2d/core': 1.1.6(docx@9.5.0)
       docx: 9.5.0
 
   '@m2d/math@0.0.5(docx@9.5.0)(remark-math@6.0.0)':
     dependencies:
-      '@m2d/core': 1.1.4(docx@9.5.0)
+      '@m2d/core': 1.1.6(docx@9.5.0)
       docx: 9.5.0
       latex-math: 0.0.2
       remark-math: 6.0.0
@@ -4792,9 +4792,9 @@ snapshots:
     dependencies:
       docx: 9.5.0
 
-  '@m2d/mermaid@1.0.1(docx@9.5.0)':
+  '@m2d/mermaid@1.1.1(docx@9.5.0)':
     dependencies:
-      '@m2d/core': 1.1.4(docx@9.5.0)
+      '@m2d/core': 1.1.6(docx@9.5.0)
       docx: 9.5.0
       mermaid: 11.6.0
     transitivePeerDependencies:
@@ -4802,7 +4802,7 @@ snapshots:
 
   '@m2d/table@0.0.5(docx@9.5.0)':
     dependencies:
-      '@m2d/core': 1.1.4(docx@9.5.0)
+      '@m2d/core': 1.1.6(docx@9.5.0)
       docx: 9.5.0
 
   '@manypkg/find-root@1.1.0':
@@ -6985,13 +6985,13 @@ snapshots:
 
   mdast2docx@1.0.0(remark-math@6.0.0):
     dependencies:
-      '@m2d/core': 1.1.4(docx@9.5.0)
+      '@m2d/core': 1.1.6(docx@9.5.0)
       '@m2d/emoji': 0.1.2(docx@9.5.0)
       '@m2d/html': 1.0.3(docx@9.5.0)
       '@m2d/image': 1.1.0(docx@9.5.0)
       '@m2d/list': 0.0.6(docx@9.5.0)
       '@m2d/math': 0.0.5(docx@9.5.0)(remark-math@6.0.0)
-      '@m2d/mermaid': 1.0.1(docx@9.5.0)
+      '@m2d/mermaid': 1.1.1(docx@9.5.0)
       '@m2d/table': 0.0.5(docx@9.5.0)
       docx: 9.5.0
     transitivePeerDependencies:
