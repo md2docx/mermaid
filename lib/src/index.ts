@@ -1,5 +1,6 @@
-import { IPlugin, Parent, Root, SVG, PhrasingContent, RootContent } from "@m2d/core";
+import { IPlugin, Parent, Root, SVG, PhrasingContent, RootContent, Code } from "@m2d/core";
 import mermaid, { MermaidConfig } from "mermaid";
+import { simpleCleanup, createPersistentCache } from "@m2d/core/cache";
 
 interface IMermaidPluginOptions {
   /**
@@ -10,12 +11,19 @@ interface IMermaidPluginOptions {
    * @see https://mermaid.js.org/configuration.html
    */
   mermaidConfig?: MermaidConfig;
+
   /**
-   * Optional cache for storing Mermaid source code and rendered SVGs.
-   * This can be useful for debugging or caching purposes.
+   * Attempt to fix the mermaid code if it fails to render.
+   *
    */
-  cache?: Record<string, Promise<{ svg: string }>>;
+  fixMermaid?: (mermaidCode: string, error: Error) => string;
+
+  /** Enable IndexedDB-based caching. @default true */
+  idb: boolean;
 }
+
+/** namespace for cleanup */
+const NAMESPACE = "mmd";
 
 /**
  * Default Mermaid rendering configuration.
@@ -31,8 +39,6 @@ const defaultMermaidConfig: MermaidConfig = {
   suppressErrorRendering: true,
 };
 
-const mermaidCache: Record<string, Record<string, Promise<{ svg: string }>>> = {};
-
 /**
  * Mermaid plugin for @m2d/core.
  * This plugin detects Mermaid or Mindmap code blocks and converts them into SVG nodes
@@ -43,7 +49,34 @@ export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = optio
   const finalConfig = { ...defaultMermaidConfig, ...options?.mermaidConfig };
   mermaid.initialize(finalConfig);
 
-  const cache = Object.assign(options?.cache ?? {}, mermaidCache[JSON.stringify(finalConfig)]);
+  const mermaidProcessor = async (node: Code) => {
+    let value = node.value;
+    // Automatically prefix 'mindmap' if missing for mindmap blocks
+    if (node.lang === "mindmap" && !value.startsWith("mindmap")) value = `mindmap\n${value}`;
+
+    if (!/^mindmap|gantt|gitGraph|timeline/i.test(value))
+      value = value
+        .split("\n")
+        .map(line => line.trim())
+        .join("\n");
+
+    // Generate a unique ID for Mermaid rendering — must not start with a number
+    const mId = `m${crypto.randomUUID()}`;
+
+    try {
+      return await mermaid.render(mId, value);
+    } catch (error) {
+      /* v8 ignore next 2 Log error but continue gracefully */
+      console.warn(error);
+      if (options?.fixMermaid)
+        try {
+          return await mermaid.render(mId, options.fixMermaid(value, error as Error));
+        } catch (error1) {
+          /* v8 ignore next 2 Log error but continue gracefully */
+          console.warn(error1);
+        }
+    }
+  };
 
   const preprocess = (node: Root | RootContent | PhrasingContent) => {
     // Preprocess the AST to detect and cache Mermaid or Mindmap blocks
@@ -51,41 +84,24 @@ export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = optio
 
     // Only process code blocks with a supported language tag
     if (node.type === "code" && /(mindmap|mermaid|mmd)/.test(node.lang ?? "")) {
-      let value = node.value;
-      // Automatically prefix 'mindmap' if missing for mindmap blocks
-      if (node.lang === "mindmap" && !value.startsWith("mindmap")) value = `mindmap\n${value}`;
+      // Create an extended MDAST-compatible SVG node
+      const svgNode: SVG = {
+        type: "svg",
+        value: createPersistentCache(mermaidProcessor, NAMESPACE, [], options?.idb ?? true)(node),
+        // Store original Mermaid source in data for traceability/debug
+        data: { mermaid: node.value },
+      };
 
-      if (!/^mindmap|gantt|gitGraph|timeline/i.test(value))
-        value = value
-          .split("\n")
-          .map(line => line.trim())
-          .join("\n");
-
-      // Generate a unique ID for Mermaid rendering — must not start with a number
-      const mId = `m${crypto.randomUUID()}`;
-
-      try {
-        cache[value] = cache[value] ?? mermaid.render(mId, value);
-
-        // Create an extended MDAST-compatible SVG node
-        const svgNode: SVG = {
-          type: "svg",
-          value: cache[value],
-          // Store original Mermaid source in data for traceability/debug
-          data: { mermaid: value },
-        };
-
-        // Replace the code block with a paragraph that contains the SVG
-        Object.assign(node, {
-          type: "paragraph",
-          children: [svgNode],
-          data: { alignment: "center" }, // center-align diagram
-        });
-      } catch (error) {
-        /* v8 ignore next 2 Log error but continue gracefully */
-        console.error(error);
-      }
+      // Replace the code block with a paragraph that contains the SVG
+      Object.assign(node, {
+        type: "paragraph",
+        children: [svgNode],
+        data: { alignment: "center" }, // center-align diagram
+      });
     }
+
+    // clean up mermaid results not used for last 30 days. Duration is kept more compared to images as it is lighter
+    simpleCleanup(30 * 24 * 60, NAMESPACE);
   };
 
   return {
