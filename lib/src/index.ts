@@ -18,7 +18,7 @@ interface IMermaidPluginOptions {
   fixMermaid?: (mermaidCode: string, error: Error) => string;
 
   /** Enable IndexedDB-based caching. @default true */
-  idb: boolean;
+  idb?: boolean;
 
   /** Clean up the entries that are not used for following minutes. @default 30 * 24 * 60 -- that is 30 days */
   maxAgeMinutes?: number;
