@@ -1,5 +1,11 @@
 # @m2d/mermaid
 
+## 1.1.3
+
+### Patch Changes
+
+- 55c8df9: fix: make idb optional parameter
+
 ## 1.1.2
 
 ### Patch Changes
