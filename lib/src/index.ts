@@ -51,10 +51,7 @@ export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = optio
   mermaid.initialize(finalConfig);
 
   const maxAgeMinutes = options?.maxAgeMinutes ?? 30 * 24 * 60;
-
-  // Clean up cached Mermaid entries older maxAgeMinutes
-  // Kept longer than image cache due to smaller size
-  simpleCleanup(maxAgeMinutes, NAMESPACE);
+  let cleanupDone = false;
 
   const mermaidProcessor = async (value: string, _options: MermaidConfig) => {
     const mId = `m${crypto.randomUUID()}`; // Must not start with a number
@@ -118,5 +115,12 @@ export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = optio
      * Transforms supported code blocks into centered SVGs for DOCX output.
      */
     preprocess,
+    /** clean up IndexedDB once the document is packed */
+    postprocess: () => {
+      if ((options?.idb ?? true) && !cleanupDone) {
+        cleanupDone = true;
+        simpleCleanup(maxAgeMinutes, NAMESPACE);
+      }
+    },
   };
 };
