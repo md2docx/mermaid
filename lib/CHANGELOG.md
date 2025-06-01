@@ -1,5 +1,17 @@
 # @m2d/mermaid
 
+## 1.1.4
+
+### Patch Changes
+
+- 84bc24b: Optimize cache cleanup by moving it to postprocess hook
+
+  - Move cache cleanup from initialization to postprocess hook
+  - Only run cleanup once per session with cleanupDone flag
+  - Prevent unnecessary cleanups on multiple renders
+
+- 8d0c585: Update Readme
+
 ## 1.1.3
 
 ### Patch Changes
