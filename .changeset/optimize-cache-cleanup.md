@@ -1,5 +1,5 @@
 ---
-"@m2d/mermaid": minor
+"@m2d/mermaid": patch
 ---
 
 Optimize cache cleanup by moving it to postprocess hook
