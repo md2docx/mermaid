@@ -1,5 +1,11 @@
 # @m2d/mermaid
 
+## 1.1.5
+
+### Patch Changes
+
+- 165b4b1: Update types to be competible with the rest of the ecosystem.
+
 ## 1.1.4
 
 ### Patch Changes
