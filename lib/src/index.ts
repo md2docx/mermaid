@@ -62,7 +62,7 @@ export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = optio
   mermaid.initialize(finalConfig);
 
   const cacheConfig = {
-    cache: options?.cache,
+    cache: options?.cache ?? undefined,
     ...defaultCacheConfig,
     ...options?.cacheConfig,
   } as CacheConfigType<RenderResult | undefined>;
