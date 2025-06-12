@@ -17,6 +17,11 @@ interface IMermaidPluginOptions {
    */
   fixMermaid?: (mermaidCode: string, error: Error) => string;
 
+  /**
+   * In-memory cache object, useful for cache sharing across plugins/tabs.
+   */
+  cache?: Record<string, Promise<unknown>>;
+
   /** Configure caching */
   cacheConfig?: CacheConfigType<RenderResult | undefined>;
 
@@ -56,9 +61,11 @@ export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = optio
   const finalConfig = { ...defaultMermaidConfig, ...options?.mermaidConfig };
   mermaid.initialize(finalConfig);
 
-  const cacheConfig = { ...defaultCacheConfig, ...options?.cacheConfig } as CacheConfigType<
-    RenderResult | undefined
-  >;
+  const cacheConfig = {
+    cache: options?.cache,
+    ...defaultCacheConfig,
+    ...options?.cacheConfig,
+  } as CacheConfigType<RenderResult | undefined>;
 
   const maxAgeMinutes = options?.maxAgeMinutes ?? 30 * 24 * 60;
   let cleanupDone = false;
