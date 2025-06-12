@@ -1,5 +1,11 @@
 # @m2d/mermaid
 
+## 1.2.1
+
+### Patch Changes
+
+- 07ab8ba: provide cache field to avoid entire cacheConfig option for simple cache sharing optimizations.
+
 ## 1.2.0
 
 ### Minor Changes
