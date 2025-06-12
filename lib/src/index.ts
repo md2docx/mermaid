@@ -1,6 +1,6 @@
 import { IPlugin, Parent, Root, SVG, PhrasingContent, RootContent, Code } from "@m2d/core";
-import mermaid, { MermaidConfig } from "mermaid";
-import { simpleCleanup, createPersistentCache } from "@m2d/core/cache";
+import mermaid, { MermaidConfig, RenderResult } from "mermaid";
+import { simpleCleanup, createPersistentCache, type CacheConfigType } from "@m2d/core/cache";
 
 interface IMermaidPluginOptions {
   /**
@@ -17,8 +17,8 @@ interface IMermaidPluginOptions {
    */
   fixMermaid?: (mermaidCode: string, error: Error) => string;
 
-  /** Enable IndexedDB-based caching. @default true */
-  idb?: boolean;
+  /** Configure caching */
+  cacheConfig?: CacheConfigType<RenderResult | undefined>;
 
   /** Clean up the entries that are not used for following minutes. @default 30 * 24 * 60 -- that is 30 days */
   maxAgeMinutes?: number;
@@ -40,6 +40,12 @@ const defaultMermaidConfig: MermaidConfig = {
   suppressErrorRendering: true,
 };
 
+const defaultCacheConfig = {
+  cacheMode: "both",
+  ignoreKeys: ["type", "lang"],
+  parallel: true,
+};
+
 /**
  * Mermaid plugin for @m2d/core.
  * Detects `mermaid`, `mmd`, and `mindmap` code blocks and converts them to SVG.
@@ -49,6 +55,10 @@ export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = optio
   // Merge user config with defaults and initialize Mermaid
   const finalConfig = { ...defaultMermaidConfig, ...options?.mermaidConfig };
   mermaid.initialize(finalConfig);
+
+  const cacheConfig = { ...defaultCacheConfig, ...options?.cacheConfig } as CacheConfigType<
+    RenderResult | undefined
+  >;
 
   const maxAgeMinutes = options?.maxAgeMinutes ?? 30 * 24 * 60;
   let cleanupDone = false;
@@ -93,12 +103,7 @@ export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = optio
       }
       const svgNode: SVG = {
         type: "svg",
-        value: createPersistentCache(
-          mermaidProcessor,
-          NAMESPACE,
-          ["type", "lang"],
-          options?.idb ?? true,
-        )(value, finalConfig),
+        value: createPersistentCache(mermaidProcessor, NAMESPACE, cacheConfig)(value, finalConfig),
         data: { mermaid: value }, // Preserve original source
       };
 
@@ -117,7 +122,10 @@ export const mermaidPlugin: (options?: IMermaidPluginOptions) => IPlugin = optio
     preprocess,
     /** clean up IndexedDB once the document is packed */
     postprocess: () => {
-      if ((options?.idb ?? true) && !cleanupDone) {
+      if (
+        (options?.cacheConfig?.cacheMode ? options?.cacheConfig?.cacheMode !== "memory" : true) &&
+        !cleanupDone
+      ) {
         cleanupDone = true;
         simpleCleanup(maxAgeMinutes, NAMESPACE);
       }
