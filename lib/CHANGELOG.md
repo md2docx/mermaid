@@ -1,5 +1,11 @@
 # @m2d/mermaid
 
+## 1.2.2
+
+### Patch Changes
+
+- fdf4851: fix: handle edgecase when cache is deleberately set to null.
+
 ## 1.2.1
 
 ### Patch Changes

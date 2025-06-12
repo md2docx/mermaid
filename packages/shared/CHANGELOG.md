@@ -1,5 +1,12 @@
 # @repo/shared
 
+## 0.0.14
+
+### Patch Changes
+
+- Updated dependencies [fdf4851]
+  - @m2d/mermaid@1.2.2
+
 ## 0.0.13
 
 ### Patch Changes
