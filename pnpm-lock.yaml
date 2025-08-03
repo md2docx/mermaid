@@ -300,8 +300,8 @@ importers:
         specifier: ^11.0.0
         version: 11.0.0
       typingfx:
-        specifier: ^1.1.2
-        version: 1.1.2(@types/react@19.1.9)(next@15.4.5(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(sass@1.89.2))(react@19.1.1)
+        specifier: ^1.2.0
+        version: 1.2.0(@types/react@19.1.9)(react@19.1.1)
       unified:
         specifier: ^11.0.5
         version: 11.0.5
@@ -3897,15 +3897,11 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  typingfx@1.1.2:
-    resolution: {integrity: sha512-zrf4N0EHQLpDIncrvdxpJDru1Wd29XrqDQgeqHaL9ziTOhOSybt6hXmeW+vEM2QyWwEQ8dn7zVrf8vqVq7BRxw==}
+  typingfx@1.2.0:
+    resolution: {integrity: sha512-3Kf2J9R5YOIXCGCiCOMBqqujSD+2rARPJ1uTzD5aCvOYajQd8TUoEp+tSXvr8YsY811gddExUlfooM5y3xfkPg==}
     peerDependencies:
       '@types/react': '>=16.8'
-      next: '>=10'
       react: '>=16.8'
-    peerDependenciesMeta:
-      next:
-        optional: true
 
   ufo@1.6.1:
     resolution: {integrity: sha512-9a4/uxlTWJ4+a5i0ooc1rU7C7YOw3wT+UGqdeNNHWnOF9qcMBgLRS+4IYUqbczewFx4mLEig6gawh7X6mFlEkA==}
@@ -8248,12 +8244,13 @@ snapshots:
 
   typescript@5.9.2: {}
 
-  typingfx@1.1.2(@types/react@19.1.9)(next@15.4.5(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(sass@1.89.2))(react@19.1.1):
+  typingfx@1.2.0(@types/react@19.1.9)(react@19.1.1):
     dependencies:
       '@types/react': 19.1.9
+      kosha: 1.3.1(@types/react@19.1.9)(react@19.1.1)
       react: 19.1.1
-    optionalDependencies:
-      next: 15.4.5(@babel/core@7.28.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(sass@1.89.2)
+    transitivePeerDependencies:
+      - immer
 
   ufo@1.6.1: {}
 
