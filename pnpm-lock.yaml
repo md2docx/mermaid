@@ -182,7 +182,7 @@ importers:
         version: 25.0.3
       '@vitest/coverage-v8':
         specifier: ^4.0.16
-        version: 4.0.16(vitest@4.0.16(@types/node@25.0.3)(happy-dom@17.5.6)(jsdom@27.3.0(postcss@8.5.6))(sass@1.97.0)(yaml@2.7.0))
+        version: 4.0.16(vitest@4.0.16(@types/node@25.0.3)(happy-dom@17.5.6)(jsdom@27.3.0)(sass@1.97.0)(yaml@2.7.0))
       docx:
         specifier: ^9.5.1
         version: 9.5.1
@@ -191,7 +191,7 @@ importers:
         version: 0.0.0
       jsdom:
         specifier: ^27.3.0
-        version: 27.3.0(postcss@8.5.6)
+        version: 27.3.0
       remark-parse:
         specifier: ^11.0.0
         version: 11.0.0
@@ -205,11 +205,11 @@ importers:
         specifier: ^11.0.5
         version: 11.0.5
       vite-tsconfig-paths:
-        specifier: ^6.0.1
-        version: 6.0.1(typescript@5.9.3)(vite@7.3.0(@types/node@25.0.3)(sass@1.97.0)(yaml@2.7.0))
+        specifier: ^6.0.2
+        version: 6.0.2(typescript@5.9.3)(vite@7.3.0(@types/node@25.0.3)(sass@1.97.0)(yaml@2.7.0))
       vitest:
         specifier: ^4.0.16
-        version: 4.0.16(@types/node@25.0.3)(happy-dom@17.5.6)(jsdom@27.3.0(postcss@8.5.6))(sass@1.97.0)(yaml@2.7.0)
+        version: 4.0.16(@types/node@25.0.3)(happy-dom@17.5.6)(jsdom@27.3.0)(sass@1.97.0)(yaml@2.7.0)
 
   packages/config-typescript: {}
 
@@ -332,7 +332,7 @@ importers:
         version: 5.1.2(vite@7.3.0(@types/node@25.0.3)(sass@1.97.0)(yaml@2.7.0))
       '@vitest/coverage-v8':
         specifier: ^4.0.16
-        version: 4.0.16(vitest@4.0.16(@types/node@25.0.3)(happy-dom@17.5.6)(jsdom@27.3.0(postcss@8.5.6))(sass@1.97.0)(yaml@2.7.0))
+        version: 4.0.16(vitest@4.0.16(@types/node@25.0.3)(happy-dom@17.5.6)(jsdom@27.3.0)(sass@1.97.0)(yaml@2.7.0))
       esbuild-plugin-rdi:
         specifier: ^0.0.0
         version: 0.0.0
@@ -344,7 +344,7 @@ importers:
         version: 0.0.4
       jsdom:
         specifier: ^27.3.0
-        version: 27.3.0(postcss@8.5.6)
+        version: 27.3.0
       react:
         specifier: ^19.2.3
         version: 19.2.3
@@ -358,11 +358,11 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
       vite-tsconfig-paths:
-        specifier: ^6.0.1
-        version: 6.0.1(typescript@5.9.3)(vite@7.3.0(@types/node@25.0.3)(sass@1.97.0)(yaml@2.7.0))
+        specifier: ^6.0.2
+        version: 6.0.2(typescript@5.9.3)(vite@7.3.0(@types/node@25.0.3)(sass@1.97.0)(yaml@2.7.0))
       vitest:
         specifier: ^4.0.16
-        version: 4.0.16(@types/node@25.0.3)(happy-dom@17.5.6)(jsdom@27.3.0(postcss@8.5.6))(sass@1.97.0)(yaml@2.7.0)
+        version: 4.0.16(@types/node@25.0.3)(happy-dom@17.5.6)(jsdom@27.3.0)(sass@1.97.0)(yaml@2.7.0)
 
   scripts: {}
 
@@ -571,11 +571,9 @@ packages:
     peerDependencies:
       '@csstools/css-tokenizer': ^3.0.4
 
-  '@csstools/css-syntax-patches-for-csstree@1.0.14':
-    resolution: {integrity: sha512-zSlIxa20WvMojjpCSy8WrNpcZ61RqfTfX3XTaOeVlGJrt/8HF3YbzgFZa01yTbT4GWQLwfTcC3EB8i3XnB647Q==}
+  '@csstools/css-syntax-patches-for-csstree@1.0.21':
+    resolution: {integrity: sha512-plP8N8zKfEZ26figX4Nvajx8DuzfuRpLTqglQ5d0chfnt35Qt3X+m6ASZ+rG0D0kxe/upDVNwSIVJP5n4FuNfw==}
     engines: {node: '>=18'}
-    peerDependencies:
-      postcss: ^8.4
 
   '@csstools/css-tokenizer@3.0.4':
     resolution: {integrity: sha512-Vd/9EVDiu6PPJt9yAh6roZP6El1xHrdvIVGjyBsHR0RYwNHgL7FJPyIIW4fANJNG6FtyZfvlRPpFI4ZM/lubvw==}
@@ -1908,8 +1906,8 @@ packages:
     engines: {node: '>=4'}
     hasBin: true
 
-  cssstyle@5.3.4:
-    resolution: {integrity: sha512-KyOS/kJMEq5O9GdPnaf82noigg5X5DYn0kZPJTaAsCUaBizp6Xa1y9D4Qoqf/JazEXWuruErHgVXwjN5391ZJw==}
+  cssstyle@5.3.5:
+    resolution: {integrity: sha512-GlsEptulso7Jg0VaOZ8BXQi3AkYM5BOJKEO/rjMidSCq70FkIC5y0eawrCXeYzxgt3OCf4Ls+eoxN+/05vN0Ag==}
     engines: {node: '>=20'}
 
   csstype@3.2.3:
@@ -3969,8 +3967,8 @@ packages:
   vfile@6.0.3:
     resolution: {integrity: sha512-KzIbH/9tXat2u30jf+smMwFCsno4wHVdNmzFyL+T/L3UGqqk6JKfVqOFOZEpZSHADH1k40ab6NUIXZq422ov3Q==}
 
-  vite-tsconfig-paths@6.0.1:
-    resolution: {integrity: sha512-OQuYkfCQhc2T+n//0N7/oogTosgiSyZQ7dydrpUlH5SbnFTtplpekdY4GMi6jDwEpiwWlqeUJMyPfC2ePM1+2A==}
+  vite-tsconfig-paths@6.0.2:
+    resolution: {integrity: sha512-c06LOO8fWB5RuEPpEIHXU9t7Dt4DoiPIljnKws9UygIaQo6PoFKawTftz5/QVcO+6pOs/HHWycnq4UrZkWVYnQ==}
     peerDependencies:
       vite: '*'
     peerDependenciesMeta:
@@ -4513,9 +4511,7 @@ snapshots:
     dependencies:
       '@csstools/css-tokenizer': 3.0.4
 
-  '@csstools/css-syntax-patches-for-csstree@1.0.14(postcss@8.5.6)':
-    dependencies:
-      postcss: 8.5.6
+  '@csstools/css-syntax-patches-for-csstree@1.0.21': {}
 
   '@csstools/css-tokenizer@3.0.4': {}
 
@@ -5397,7 +5393,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@vitest/coverage-v8@4.0.16(vitest@4.0.16(@types/node@25.0.3)(happy-dom@17.5.6)(jsdom@27.3.0(postcss@8.5.6))(sass@1.97.0)(yaml@2.7.0))':
+  '@vitest/coverage-v8@4.0.16(vitest@4.0.16(@types/node@25.0.3)(happy-dom@17.5.6)(jsdom@27.3.0)(sass@1.97.0)(yaml@2.7.0))':
     dependencies:
       '@bcoe/v8-coverage': 1.0.2
       '@vitest/utils': 4.0.16
@@ -5410,7 +5406,7 @@ snapshots:
       obug: 2.1.1
       std-env: 3.10.0
       tinyrainbow: 3.0.3
-      vitest: 4.0.16(@types/node@25.0.3)(happy-dom@17.5.6)(jsdom@27.3.0(postcss@8.5.6))(sass@1.97.0)(yaml@2.7.0)
+      vitest: 4.0.16(@types/node@25.0.3)(happy-dom@17.5.6)(jsdom@27.3.0)(sass@1.97.0)(yaml@2.7.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -5724,13 +5720,11 @@ snapshots:
 
   cssesc@3.0.0: {}
 
-  cssstyle@5.3.4(postcss@8.5.6):
+  cssstyle@5.3.5:
     dependencies:
       '@asamuzakjp/css-color': 4.1.1
-      '@csstools/css-syntax-patches-for-csstree': 1.0.14(postcss@8.5.6)
+      '@csstools/css-syntax-patches-for-csstree': 1.0.21
       css-tree: 3.1.0
-    transitivePeerDependencies:
-      - postcss
 
   csstype@3.2.3: {}
 
@@ -6735,11 +6729,11 @@ snapshots:
     dependencies:
       argparse: 2.0.1
 
-  jsdom@27.3.0(postcss@8.5.6):
+  jsdom@27.3.0:
     dependencies:
       '@acemir/cssom': 0.9.29
       '@asamuzakjp/dom-selector': 6.7.6
-      cssstyle: 5.3.4(postcss@8.5.6)
+      cssstyle: 5.3.5
       data-urls: 6.0.0
       decimal.js: 10.6.0
       html-encoding-sniffer: 4.0.0
@@ -6759,7 +6753,6 @@ snapshots:
       xml-name-validator: 5.0.0
     transitivePeerDependencies:
       - bufferutil
-      - postcss
       - supports-color
       - utf-8-validate
 
@@ -8302,7 +8295,7 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
-  vite-tsconfig-paths@6.0.1(typescript@5.9.3)(vite@7.3.0(@types/node@25.0.3)(sass@1.97.0)(yaml@2.7.0)):
+  vite-tsconfig-paths@6.0.2(typescript@5.9.3)(vite@7.3.0(@types/node@25.0.3)(sass@1.97.0)(yaml@2.7.0)):
     dependencies:
       debug: 4.4.3
       globrex: 0.1.2
@@ -8327,7 +8320,7 @@ snapshots:
       sass: 1.97.0
       yaml: 2.7.0
 
-  vitest@4.0.16(@types/node@25.0.3)(happy-dom@17.5.6)(jsdom@27.3.0(postcss@8.5.6))(sass@1.97.0)(yaml@2.7.0):
+  vitest@4.0.16(@types/node@25.0.3)(happy-dom@17.5.6)(jsdom@27.3.0)(sass@1.97.0)(yaml@2.7.0):
     dependencies:
       '@vitest/expect': 4.0.16
       '@vitest/mocker': 4.0.16(vite@7.3.0(@types/node@25.0.3)(sass@1.97.0)(yaml@2.7.0))
@@ -8352,7 +8345,7 @@ snapshots:
     optionalDependencies:
       '@types/node': 25.0.3
       happy-dom: 17.5.6
-      jsdom: 27.3.0(postcss@8.5.6)
+      jsdom: 27.3.0
     transitivePeerDependencies:
       - jiti
       - less
