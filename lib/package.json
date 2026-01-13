@@ -34,7 +34,7 @@
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@types/node": "^25.0.7",
+    "@types/node": "^25.0.8",
     "@vitest/coverage-v8": "^4.0.17",
     "docx": "^9.5.1",
     "esbuild-plugin-rdi": "^0.0.0",
