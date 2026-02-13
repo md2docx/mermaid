@@ -35,10 +35,10 @@ importers:
     dependencies:
       '@m2d/core':
         specifier: ^1.7.1
-        version: 1.7.1(docx@9.5.1)
+        version: 1.7.1(docx@9.5.2)
       '@m2d/emoji':
         specifier: ^0.1.3
-        version: 0.1.3(docx@9.5.1)
+        version: 0.1.3(docx@9.5.2)
       '@m2d/mermaid':
         specifier: workspace:*
         version: link:../../lib
@@ -111,10 +111,10 @@ importers:
     dependencies:
       '@m2d/core':
         specifier: ^1.7.1
-        version: 1.7.1(docx@9.5.1)
+        version: 1.7.1(docx@9.5.2)
       '@m2d/emoji':
         specifier: ^0.1.3
-        version: 0.1.3(docx@9.5.1)
+        version: 0.1.3(docx@9.5.2)
       '@m2d/mermaid':
         specifier: workspace:*
         version: link:../../lib
@@ -166,7 +166,7 @@ importers:
     dependencies:
       '@m2d/core':
         specifier: ^1.7.1
-        version: 1.7.1(docx@9.5.1)
+        version: 1.7.1(docx@9.5.2)
       mermaid:
         specifier: ^11.12.2
         version: 11.12.2
@@ -184,8 +184,8 @@ importers:
         specifier: ^4.0.18
         version: 4.0.18(vitest@4.0.18(@types/node@25.2.3)(happy-dom@17.5.6)(jsdom@28.0.0)(sass@1.97.3)(yaml@2.7.0))
       docx:
-        specifier: ^9.5.1
-        version: 9.5.1
+        specifier: ^9.5.2
+        version: 9.5.2
       esbuild-plugin-rdi:
         specifier: ^0.0.0
         version: 0.0.0
@@ -256,13 +256,13 @@ importers:
     dependencies:
       '@m2d/core':
         specifier: ^1.7.1
-        version: 1.7.1(docx@9.5.1)
+        version: 1.7.1(docx@9.5.2)
       '@m2d/emoji':
         specifier: ^0.1.3
-        version: 0.1.3(docx@9.5.1)
+        version: 0.1.3(docx@9.5.2)
       '@m2d/image':
         specifier: ^1.4.1
-        version: 1.4.1(docx@9.5.1)(sharp@0.34.5)
+        version: 1.4.1(docx@9.5.2)(sharp@0.34.5)
       '@m2d/mermaid':
         specifier: workspace:*
         version: link:../../lib
@@ -767,8 +767,8 @@ packages:
     resolution: {integrity: sha512-bIZEUzOI1jkhviX2cp5vNyXQc6olzb2ohewQubuYlMXZ2Q/XjBO0x0XhGPvc9fjSIiUN0vw+0hq53BJ4eQSJKQ==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
-  '@exodus/bytes@1.14.0':
-    resolution: {integrity: sha512-YiY1OmY6Qhkvmly8vZiD8wZRpW/npGZNg+0Sk8mstxirRHCg6lolHt5tSODCfuNPE/fBsAqRwDJE417x7jDDHA==}
+  '@exodus/bytes@1.14.1':
+    resolution: {integrity: sha512-OhkBFWI6GcRMUroChZiopRiSp2iAMvEBK47NhJooDqz1RERO4QuZIZnjP63TXX8GAiLABkYmX+fuQsdJ1dd2QQ==}
     engines: {node: ^20.19.0 || ^22.12.0 || >=24.0.0}
     peerDependencies:
       '@noble/hashes': ^1.8.0 || ^2.0.0
@@ -960,13 +960,9 @@ packages:
       '@types/node':
         optional: true
 
-  '@isaacs/balanced-match@4.0.1':
-    resolution: {integrity: sha512-yzMTt9lEb8Gv7zRioUilSglI0c0smZ9k5D65677DLWLtWJaXIS3CqcGyUFByYKlnUj6TkjLVs54fBl6+TiGQDQ==}
-    engines: {node: 20 || >=22}
-
-  '@isaacs/brace-expansion@5.0.1':
-    resolution: {integrity: sha512-WMz71T1JS624nWj2n2fnYAuPovhv7EUhk69R6i9dsVyzxt5eM3bjwvgk9L+APE1TRscGysAVMANkB0jh0LQZrQ==}
-    engines: {node: 20 || >=22}
+  '@isaacs/cliui@9.0.0':
+    resolution: {integrity: sha512-AokJm4tuBHillT+FpMtxQ60n8ObyXBatq7jD2/JA9dxbDDokKQm8KMht5ibGzLVU9IJDIKK4TPKgMHEYMn3lMg==}
+    engines: {node: '>=18'}
 
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
@@ -1819,6 +1815,10 @@ packages:
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
+  balanced-match@4.0.2:
+    resolution: {integrity: sha512-x0K50QvKQ97fdEz2kPehIerj+YTeptKF9hyYkKf6egnwmMWAkADiO0QCzSp0R5xN8FTZgYaBfSaue46Ej62nMg==}
+    engines: {node: 20 || >=22}
+
   baseline-browser-mapping@2.9.19:
     resolution: {integrity: sha512-ipDqC8FrAl/76p2SSWKSI+H9tFwm7vYqXQrItCuiVPt26Km0jS+NzSsBWAaBusvSbQcfJG+JitdMm+wZAgTYqg==}
     hasBin: true
@@ -1835,6 +1835,10 @@ packages:
 
   brace-expansion@2.0.2:
     resolution: {integrity: sha512-Jt0vHyM+jmUBqojB7E1NIYadt0vI0Qxjxd2TErW94wDz+E2LAm5vKMXXwg6ZZBTHPuUlDgQHKXvjGBdfcF1ZDQ==}
+
+  brace-expansion@5.0.2:
+    resolution: {integrity: sha512-Pdk8c9poy+YhOgVWw1JNN22/HcivgKWwpxKq04M/jTmHyCZn12WPJebZxdjSa5TmBqISrUSgNYU3eRORljfCCw==}
+    engines: {node: 20 || >=22}
 
   braces@3.0.3:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
@@ -2205,8 +2209,8 @@ packages:
     resolution: {integrity: sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw==}
     engines: {node: '>=0.10.0'}
 
-  docx@9.5.1:
-    resolution: {integrity: sha512-ABDI7JEirFD2+bHhOBlsGZxaG1UgZb2M/QMKhLSDGgVNhxDesTCDcP+qoDnDGjZ4EOXTRfUjUgwHVuZ6VSTfWQ==}
+  docx@9.5.2:
+    resolution: {integrity: sha512-IJDqLzYeCGtnHJRtljEHCX/v9aQS0jgzpyD3BSxClEepFfn4h/H/5RVRminu05Kf4e29oMDZKRGyQo/5nQZmMg==}
     engines: {node: '>=10'}
 
   dom-accessibility-api@0.5.16:
@@ -2783,6 +2787,10 @@ packages:
     resolution: {integrity: sha512-H0dkQoCa3b2VEeKQBOxFph+JAbcrQdE7KC0UkqwpLmv2EC4P41QXP+rqo9wYodACiG5/WM5s9oDApTU8utwj9g==}
     engines: {node: '>= 0.4'}
 
+  jackspeak@4.2.3:
+    resolution: {integrity: sha512-ykkVRwrYvFm1nb2AJfKKYPr0emF6IiXDYUaFx4Zn9ZuIH7MrzEZ3sD5RlqGXNRpHtvUHJyOnCEFxOlNDtGo7wg==}
+    engines: {node: 20 || >=22}
+
   joycon@3.1.1:
     resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}
     engines: {node: '>=10'}
@@ -3103,8 +3111,8 @@ packages:
   minimalistic-assert@1.0.1:
     resolution: {integrity: sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A==}
 
-  minimatch@10.1.2:
-    resolution: {integrity: sha512-fu656aJ0n2kcXwsnwnv9g24tkU5uSmOlTjd6WyyaKm2Z+h1qmY6bAjrcaIxF/BslFqbZ8UBtbJi7KgQOZD2PTw==}
+  minimatch@10.2.0:
+    resolution: {integrity: sha512-ugkC31VaVg9cF0DFVoADH12k6061zNZkZON+aX8AWsR9GhPcErkcMBceb6znR8wLERM2AkkOxy2nWRLpT9Jq5w==}
     engines: {node: 20 || >=22}
 
   minimatch@3.1.2:
@@ -4636,7 +4644,7 @@ snapshots:
     dependencies:
       '@eslint/object-schema': 3.0.1
       debug: 4.4.3
-      minimatch: 10.1.2
+      minimatch: 10.2.0
     transitivePeerDependencies:
       - supports-color
 
@@ -4655,7 +4663,7 @@ snapshots:
       '@eslint/core': 1.1.0
       levn: 0.4.1
 
-  '@exodus/bytes@1.14.0': {}
+  '@exodus/bytes@1.14.1': {}
 
   '@humanfs/core@0.19.1': {}
 
@@ -4780,11 +4788,7 @@ snapshots:
     optionalDependencies:
       '@types/node': 25.2.3
 
-  '@isaacs/balanced-match@4.0.1': {}
-
-  '@isaacs/brace-expansion@5.0.1':
-    dependencies:
-      '@isaacs/balanced-match': 4.0.1
+  '@isaacs/cliui@9.0.0': {}
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
@@ -4805,57 +4809,57 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@m2d/core@1.7.1(docx@9.5.1)':
+  '@m2d/core@1.7.1(docx@9.5.2)':
     dependencies:
-      '@m2d/mdast': 0.2.4(docx@9.5.1)
-      docx: 9.5.1
+      '@m2d/mdast': 0.2.4(docx@9.5.2)
+      docx: 9.5.2
 
-  '@m2d/emoji@0.1.3(docx@9.5.1)':
+  '@m2d/emoji@0.1.3(docx@9.5.2)':
     dependencies:
-      '@m2d/core': 1.7.1(docx@9.5.1)
-      docx: 9.5.1
+      '@m2d/core': 1.7.1(docx@9.5.2)
+      docx: 9.5.2
 
-  '@m2d/html@1.1.11(docx@9.5.1)':
+  '@m2d/html@1.1.11(docx@9.5.2)':
     dependencies:
-      '@m2d/core': 1.7.1(docx@9.5.1)
-      docx: 9.5.1
+      '@m2d/core': 1.7.1(docx@9.5.2)
+      docx: 9.5.2
 
-  '@m2d/image@1.4.1(docx@9.5.1)(sharp@0.34.5)':
+  '@m2d/image@1.4.1(docx@9.5.2)(sharp@0.34.5)':
     dependencies:
-      '@m2d/core': 1.7.1(docx@9.5.1)
+      '@m2d/core': 1.7.1(docx@9.5.2)
       '@svg-fns/io': 1.0.1
       '@svg-fns/svg2img': 0.0.0(sharp@0.34.5)
-      docx: 9.5.1
+      docx: 9.5.2
     transitivePeerDependencies:
       - '@xmldom/xmldom'
       - sharp
 
-  '@m2d/list@0.0.9(docx@9.5.1)':
+  '@m2d/list@0.0.9(docx@9.5.2)':
     dependencies:
-      '@m2d/core': 1.7.1(docx@9.5.1)
-      docx: 9.5.1
+      '@m2d/core': 1.7.1(docx@9.5.2)
+      docx: 9.5.2
 
-  '@m2d/math@0.0.6(docx@9.5.1)(remark-math@6.0.0)':
+  '@m2d/math@0.0.6(docx@9.5.2)(remark-math@6.0.0)':
     dependencies:
-      '@m2d/core': 1.7.1(docx@9.5.1)
-      docx: 9.5.1
+      '@m2d/core': 1.7.1(docx@9.5.2)
+      docx: 9.5.2
       latex-math: 0.0.2
       remark-math: 6.0.0
 
-  '@m2d/mdast@0.2.4(docx@9.5.1)':
+  '@m2d/mdast@0.2.4(docx@9.5.2)':
     dependencies:
-      docx: 9.5.1
+      docx: 9.5.2
 
-  '@m2d/mermaid@1.2.2(docx@9.5.1)':
+  '@m2d/mermaid@1.2.2(docx@9.5.2)':
     dependencies:
-      '@m2d/core': 1.7.1(docx@9.5.1)
-      docx: 9.5.1
+      '@m2d/core': 1.7.1(docx@9.5.2)
+      docx: 9.5.2
       mermaid: 11.12.2
 
-  '@m2d/table@0.1.1(docx@9.5.1)':
+  '@m2d/table@0.1.1(docx@9.5.2)':
     dependencies:
-      '@m2d/core': 1.7.1(docx@9.5.1)
-      docx: 9.5.1
+      '@m2d/core': 1.7.1(docx@9.5.2)
+      docx: 9.5.2
 
   '@manypkg/find-root@1.1.0':
     dependencies:
@@ -5599,6 +5603,10 @@ snapshots:
 
   balanced-match@1.0.2: {}
 
+  balanced-match@4.0.2:
+    dependencies:
+      jackspeak: 4.2.3
+
   baseline-browser-mapping@2.9.19: {}
 
   better-path-resolve@1.0.0:
@@ -5617,6 +5625,10 @@ snapshots:
   brace-expansion@2.0.2:
     dependencies:
       balanced-match: 1.0.2
+
+  brace-expansion@5.0.2:
+    dependencies:
+      balanced-match: 4.0.2
 
   braces@3.0.3:
     dependencies:
@@ -6012,7 +6024,7 @@ snapshots:
     dependencies:
       esutils: 2.0.3
 
-  docx@9.5.1:
+  docx@9.5.2:
     dependencies:
       '@types/node': 24.10.13
       hash.js: 1.1.7
@@ -6282,7 +6294,7 @@ snapshots:
       imurmurhash: 0.1.4
       is-glob: 4.0.3
       json-stable-stringify-without-jsonify: 1.0.1
-      minimatch: 10.1.2
+      minimatch: 10.2.0
       natural-compare: 1.4.0
       optionator: 0.9.4
     transitivePeerDependencies:
@@ -6524,7 +6536,7 @@ snapshots:
 
   html-encoding-sniffer@6.0.0:
     dependencies:
-      '@exodus/bytes': 1.14.0
+      '@exodus/bytes': 1.14.1
     transitivePeerDependencies:
       - '@noble/hashes'
 
@@ -6726,6 +6738,10 @@ snapshots:
       has-symbols: 1.1.0
       set-function-name: 2.0.2
 
+  jackspeak@4.2.3:
+    dependencies:
+      '@isaacs/cliui': 9.0.0
+
   joycon@3.1.1: {}
 
   js-tokens@10.0.0: {}
@@ -6745,7 +6761,7 @@ snapshots:
     dependencies:
       '@acemir/cssom': 0.9.31
       '@asamuzakjp/dom-selector': 6.7.8
-      '@exodus/bytes': 1.14.0
+      '@exodus/bytes': 1.14.1
       cssstyle: 5.3.7
       data-urls: 7.0.0
       decimal.js: 10.6.0
@@ -7020,15 +7036,15 @@ snapshots:
 
   mdast2docx@1.6.1(remark-math@6.0.0)(sharp@0.34.5):
     dependencies:
-      '@m2d/core': 1.7.1(docx@9.5.1)
-      '@m2d/emoji': 0.1.3(docx@9.5.1)
-      '@m2d/html': 1.1.11(docx@9.5.1)
-      '@m2d/image': 1.4.1(docx@9.5.1)(sharp@0.34.5)
-      '@m2d/list': 0.0.9(docx@9.5.1)
-      '@m2d/math': 0.0.6(docx@9.5.1)(remark-math@6.0.0)
-      '@m2d/mermaid': 1.2.2(docx@9.5.1)
-      '@m2d/table': 0.1.1(docx@9.5.1)
-      docx: 9.5.1
+      '@m2d/core': 1.7.1(docx@9.5.2)
+      '@m2d/emoji': 0.1.3(docx@9.5.2)
+      '@m2d/html': 1.1.11(docx@9.5.2)
+      '@m2d/image': 1.4.1(docx@9.5.2)(sharp@0.34.5)
+      '@m2d/list': 0.0.9(docx@9.5.2)
+      '@m2d/math': 0.0.6(docx@9.5.2)(remark-math@6.0.0)
+      '@m2d/mermaid': 1.2.2(docx@9.5.2)
+      '@m2d/table': 0.1.1(docx@9.5.2)
+      docx: 9.5.2
     transitivePeerDependencies:
       - '@xmldom/xmldom'
       - remark-math
@@ -7276,9 +7292,9 @@ snapshots:
 
   minimalistic-assert@1.0.1: {}
 
-  minimatch@10.1.2:
+  minimatch@10.2.0:
     dependencies:
-      '@isaacs/brace-expansion': 5.0.1
+      brace-expansion: 5.0.2
 
   minimatch@3.1.2:
     dependencies:
@@ -8407,7 +8423,7 @@ snapshots:
 
   whatwg-url@16.0.0:
     dependencies:
-      '@exodus/bytes': 1.14.0
+      '@exodus/bytes': 1.14.1
       tr46: 6.0.0
       webidl-conversions: 8.0.1
     transitivePeerDependencies:
