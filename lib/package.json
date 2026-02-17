@@ -48,7 +48,7 @@
   },
   "dependencies": {
     "@m2d/core": "^1.7.1",
-    "mermaid": "^11.12.2"
+    "mermaid": "^11.12.3"
   },
   "peerDependencies": {
     "docx": "^9.3.0"
